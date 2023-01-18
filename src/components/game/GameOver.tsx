@@ -7,13 +7,17 @@ import {
   UserInput,
   UserInputContainer,
 } from "./GameBoard.styled";
+import { useContext } from "react";
+import { GlobalStateContext } from "../../ContextWrapper";
 
 const GameOver = () => {
-  const navigate = useNavigate();
+  const globalServices = useContext(GlobalStateContext);
+
   const handleRetry = () => {
-    const changestatetoretrygame = true;
-    console.log(changestatetoretrygame);
+    globalServices.gameService.send("RETRY");
   };
+  const navigate = useNavigate();
+
   const handleLeaderboards = () => {
     navigate("/leaderboards");
   };

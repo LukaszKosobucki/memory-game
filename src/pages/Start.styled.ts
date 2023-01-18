@@ -16,7 +16,7 @@ export const StartContainer = styled.div`
   flex-direction: column;
   width: 640px;
   height: 670px;
-  gap: 3rem;
+  gap: 1rem;
 `;
 
 export const GameDescription = styled.div`

@@ -12,7 +12,7 @@ const LeaderboardList = () => {
   return (
     <LeaderboardListContainer>
       {mockList.map((user) => (
-        <LeaderboardRecord user={user} />
+        <LeaderboardRecord user={user} key={user.username} />
       ))}
     </LeaderboardListContainer>
   );

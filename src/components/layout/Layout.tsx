@@ -1,7 +1,7 @@
 import React from "react";
 import { MainLayout } from "./Layout.styled";
 
-interface IChildren {
+export interface IChildren {
   children: React.ReactNode;
 }
 

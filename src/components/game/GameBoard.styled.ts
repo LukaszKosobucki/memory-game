@@ -55,3 +55,8 @@ export const UserInput = styled.input`
     border: none;
   }
 `;
+
+export const GamePrepareContainer = styled(GaveOver)`
+  gap: 3rem;
+  height: 350px;
+`;

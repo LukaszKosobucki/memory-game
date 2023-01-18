@@ -1,13 +1,16 @@
 import { HashRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import AnimatedRoutes from "./AnimatedRoutes";
+import { GlobalStateProvider } from "./ContextWrapper";
 
 function App() {
   return (
     <Layout>
-      <HashRouter>
-        <AnimatedRoutes />
-      </HashRouter>
+      <GlobalStateProvider>
+        <HashRouter>
+          <AnimatedRoutes />
+        </HashRouter>
+      </GlobalStateProvider>
     </Layout>
   );
 }
