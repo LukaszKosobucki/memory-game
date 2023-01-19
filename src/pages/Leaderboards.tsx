@@ -18,7 +18,7 @@ const Leaderboards = () => {
 
   return (
     <motion.div
-      key="Leaderboardss"
+      key="Leaderboards"
       transition={{ duration: 0.5 }}
       initial={{ left: "100vh" }}
       animate={{ left: 0 }}

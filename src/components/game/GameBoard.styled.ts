@@ -2,16 +2,22 @@ import styled from "styled-components";
 import { colors } from "../../global.styled";
 import { motion } from "framer-motion";
 
-export const GameContainer = styled(motion.div)`
+export const GameContainer = styled.div<{ boardSize: number }>`
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: ${(props) => `${props.boardSize}px`};
+  width: ${(props) => `${props.boardSize}px`};
   justify-content: center;
   flex-wrap: wrap;
 `;
 
-export const GameBlockContainer = styled.div<{ blockSize: number }>`
-  background-color: ${colors.WhiteDamnationBasic};
+export const GameBlockContainer = styled.div<{
+  blockSize: number;
+  selected: boolean;
+}>`
+  background-color: ${(props) =>
+    props.selected ? colors.OrangeJusticeBasic : colors.WhiteDamnationBasic};
   border-radius: 15px;
   margin: 5px;
   height: ${(props) => `${props.blockSize}px`};

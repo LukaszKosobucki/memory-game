@@ -5,23 +5,23 @@ import { Heading1, Heading4 } from "../../global.styled";
 import { StartButton } from "../../pages/Start.styled";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useSelector } from "@xstate/react";
-
-const timer = (state: any) => {
-  console.log("didit");
-  return state.context.time;
-};
+import { useSelectors } from "../../utils/selectors";
 
 const Counting = () => {
   const globalServices = useContext(GlobalStateContext);
-  const getTimer = useSelector(globalServices.gameService, timer);
+  const { getTimer, getLevel, mockBoardMaker } = useSelectors();
   const [seconds, setSeconds] = useState(getTimer);
 
   useEffect(() => {
     if (seconds > 0) {
       setTimeout(() => setSeconds(seconds - 1), 1000);
     } else {
-      globalServices.gameService.send("END_COUNTING");
+      const board = mockBoardMaker(getLevel);
+      console.log("BOARD HERE ", board);
+      globalServices.gameService.send({
+        type: "END_COUNTING",
+        newBoard: board,
+      });
     }
   });
 

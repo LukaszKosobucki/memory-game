@@ -29,7 +29,7 @@ const GameOver = () => {
 
   return (
     <GaveOver>
-      <GameInfoHeader seconds={null} />
+      <GameInfoHeader />
       <GaveOverInfo>
         <Heading5>
           enter your name to preserve the record on the leaderboards
