@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { colors } from "../../global.styled";
+import { motion } from "framer-motion";
 
-export const GameContainer = styled.div`
+export const GameContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9,10 +10,12 @@ export const GameContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-export const GameBlockContainer = styled.div`
+export const GameBlockContainer = styled.div<{ blockSize: number }>`
   background-color: ${colors.WhiteDamnationBasic};
   border-radius: 15px;
   margin: 5px;
+  height: ${(props) => `${props.blockSize}px`};
+  width: ${(props) => `${props.blockSize}px`};
   &:hover {
     background-color: ${colors.OrangeJusticeBasic};
   }
@@ -20,7 +23,7 @@ export const GameBlockContainer = styled.div`
 
 export const GameInfoContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: row;
   width: 830px;
   text-align: center;
@@ -28,7 +31,7 @@ export const GameInfoContainer = styled.div`
   height: 60px;
 `;
 
-export const GaveOver = styled.div`
+export const GaveOver = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;

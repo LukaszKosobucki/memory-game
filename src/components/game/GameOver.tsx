@@ -9,6 +9,7 @@ import {
 } from "./GameBoard.styled";
 import { useContext } from "react";
 import { GlobalStateContext } from "../../ContextWrapper";
+import GameInfoHeader from "./GameInfoHeader";
 
 const GameOver = () => {
   const globalServices = useContext(GlobalStateContext);
@@ -28,6 +29,7 @@ const GameOver = () => {
 
   return (
     <GaveOver>
+      <GameInfoHeader seconds={null} />
       <GaveOverInfo>
         <Heading5>
           enter your name to preserve the record on the leaderboards

@@ -4,10 +4,15 @@ import { LeaderboardContainer } from "../components/leaderboards/Leaderboard.sty
 import LeaderboardList from "../components/leaderboards/LeaderboardList";
 import { Heading1 } from "../global.styled";
 import { StartButton } from "./Start.styled";
+import { useContext } from "react";
+import { GlobalStateContext } from "../ContextWrapper";
 
 const Leaderboards = () => {
   const navigate = useNavigate();
+  const globalServices = useContext(GlobalStateContext);
+
   const handleStart = () => {
+    globalServices.gameService.send("RETRY");
     navigate("/game");
   };
 

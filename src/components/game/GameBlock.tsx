@@ -1,14 +1,9 @@
 import { GameBlockContainer } from "./GameBoard.styled";
 
 const GameBlock = ({ size }: { size: number }) => {
-  return (
-    <GameBlockContainer
-      style={{
-        height: `${100 - (size - 3) * 15}px`,
-        width: `${100 - (size - 3) * 15}px`,
-      }}
-    ></GameBlockContainer>
-  );
+  const blockSize = 100 - (size - 3) * 15;
+  console.log(blockSize);
+  return <GameBlockContainer blockSize={blockSize}></GameBlockContainer>;
 };
 
 export default GameBlock;
