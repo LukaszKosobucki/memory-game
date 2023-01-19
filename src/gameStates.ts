@@ -89,6 +89,7 @@ export const gameMachine =
             actions: assign({
               level: ({ level }) => level + 1,
               time: ({ time }) => (time = 2),
+              board: (context, event) => (context.board = event.newBoard),
             }),
           },
           LOSE_GAME: { target: "endGame" },

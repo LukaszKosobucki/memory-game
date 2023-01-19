@@ -15,7 +15,7 @@ const GameInfoHeader = () => {
   useEffect(() => {
     if (seconds >= 0) {
       let gameTimer = setTimeout(() => setSeconds(seconds - 1), 1000);
-      if (!isPlaying && win) {
+      if (!isPlaying && seconds > 4) {
         clearTimeout(gameTimer);
       } else if (isPeekBoard && seconds === 0) {
         clearTimeout(gameTimer);

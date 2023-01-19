@@ -6,21 +6,22 @@ import { StartButton } from "../../pages/Start.styled";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useSelectors } from "../../utils/selectors";
+import { TBoard } from "./GameBoard";
 
 const Counting = () => {
   const globalServices = useContext(GlobalStateContext);
-  const { getTimer, getLevel, mockBoardMaker } = useSelectors();
+  const { getTimer, getLevel, mockBoardMaker, getState } = useSelectors();
   const [seconds, setSeconds] = useState(getTimer);
+  const [board, setBoard] = useState<TBoard[]>([]);
 
   useEffect(() => {
     if (seconds > 0) {
       setTimeout(() => setSeconds(seconds - 1), 1000);
     } else {
-      const board = mockBoardMaker(getLevel);
-      console.log("BOARD HERE ", board);
+      console.log("BOARD HERE ");
       globalServices.gameService.send({
         type: "END_COUNTING",
-        newBoard: board,
+        newBoard: mockBoardMaker(getLevel),
       });
     }
   });

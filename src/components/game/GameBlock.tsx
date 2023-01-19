@@ -14,7 +14,7 @@ const GameBlock = ({
   selected: boolean;
 }) => {
   const globalServices = useContext(GlobalStateContext);
-  const { getBoard } = useSelectors();
+  const { getBoard, mockBoardMaker, getLevel } = useSelectors();
   const [errorCounter, setErrorCounter] = useState<number>(0);
   const [correctCounter, setCorrectCounter] = useState<number>(0);
   const blockSize = 100 - (size - 3) * 15;
@@ -36,7 +36,10 @@ const GameBlock = ({
       getBoard.filter((obj: TBoard) => obj.selected === true).length ===
       correctCounter
     ) {
-      globalServices.gameService.send("WIN_LEVEL");
+      globalServices.gameService.send({
+        type: "WIN_LEVEL",
+        newBoard: mockBoardMaker(getLevel),
+      });
       setCorrectCounter(0);
       setErrorCounter(0);
       console.log("WON");
