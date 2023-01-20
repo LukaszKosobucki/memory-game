@@ -1,16 +1,13 @@
 import { motion } from "framer-motion";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import Counting from "../components/game/Counting";
 import GameBoard from "../components/game/GameBoard";
 import GameOver from "../components/game/GameOver";
 import GamePrepare from "../components/game/GamePrepare";
-import { GlobalStateContext } from "../utils/ContextWrapper";
 import { useSelectors } from "../utils/selectors";
 
 const Game = () => {
-  const globalServices = useContext(GlobalStateContext);
-
-  const { isCounting, isPlaying, isPeekBoard, hasLost, getLevel, getState } =
+  const { isCounting, isPlaying, isPeekBoard, hasLost, getState } =
     useSelectors();
 
   useEffect(() => {

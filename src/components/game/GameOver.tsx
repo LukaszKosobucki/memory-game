@@ -14,11 +14,11 @@ import { motion } from "framer-motion";
 
 const GameOver = () => {
   const globalServices = useContext(GlobalStateContext);
+  const navigate = useNavigate();
 
   const handleRetry = () => {
     globalServices.gameService.send("RETRY");
   };
-  const navigate = useNavigate();
 
   const handleLeaderboards = () => {
     navigate("/leaderboards");
