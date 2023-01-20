@@ -1,8 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useInterpret } from "@xstate/react";
 import { ActorRefFrom } from "xstate";
 import { gameMachine } from "../gameStates";
 import { IChildren } from "../components/layout/Layout";
+import { initializeApp } from "firebase/app";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import firebaseConfig from "./firestore.config";
 
 interface GlobalStateContextType {
   gameService: ActorRefFrom<typeof gameMachine>;
@@ -12,6 +15,15 @@ interface GlobalStateContextType {
   correctCounter: number;
   setUserTime: React.Dispatch<React.SetStateAction<number>>;
   userTime: number;
+  userLeaderboard: IUsers[];
+}
+
+export interface IUsers {
+  username: string;
+  time: number;
+  level: number;
+  errors: number;
+  correctClicks: number;
 }
 
 export const GlobalStateContext = createContext<GlobalStateContextType>(
@@ -23,6 +35,19 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
   const [errorCounter, setErrorCounter] = useState<number>(0);
   const [correctCounter, setCorrectCounter] = useState<number>(0);
   const [userTime, setUserTime] = useState<number>(0);
+  const [userLeaderboard, setUserLeaderboard] = useState<IUsers[]>([]);
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  const firestore = getFirestore(firebaseApp);
+  const userCol = collection(firestore, `users`);
+
+  useEffect(() => {
+    onSnapshot(userCol, (snapshot) => {
+      setUserLeaderboard(snapshot.docs.map((doc) => doc.data() as IUsers));
+    });
+    console.log(userLeaderboard);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const value: GlobalStateContextType = {
     gameService,
@@ -32,6 +57,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     correctCounter,
     userTime,
     setUserTime,
+    userLeaderboard,
   };
 
   return (
