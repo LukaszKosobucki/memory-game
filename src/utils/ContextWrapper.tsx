@@ -4,7 +4,12 @@ import { ActorRefFrom } from "xstate";
 import { gameMachine } from "../gameStates";
 import { IChildren } from "../components/layout/Layout";
 import { initializeApp } from "firebase/app";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  Firestore,
+  getFirestore,
+  onSnapshot,
+} from "firebase/firestore";
 import firebaseConfig from "./firestore.config";
 
 interface GlobalStateContextType {
@@ -16,6 +21,7 @@ interface GlobalStateContextType {
   setUserTime: React.Dispatch<React.SetStateAction<number>>;
   userTime: number;
   userLeaderboard: IUsers[];
+  firestore: Firestore;
 }
 
 export interface IUsers {
@@ -58,6 +64,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     userTime,
     setUserTime,
     userLeaderboard,
+    firestore,
   };
 
   return (

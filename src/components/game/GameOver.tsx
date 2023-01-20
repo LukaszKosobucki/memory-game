@@ -7,14 +7,27 @@ import {
   UserInput,
   UserInputContainer,
 } from "./GameBoard.styled";
-import { useContext } from "react";
-import { GlobalStateContext } from "../../utils/ContextWrapper";
+import { useContext, useRef, useState } from "react";
+import { GlobalStateContext, IUsers } from "../../utils/ContextWrapper";
 import GameInfoHeader from "./GameInfoHeader";
 import { motion } from "framer-motion";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { useSelectors } from "../../utils/selectors";
 
 const GameOver = () => {
   const globalServices = useContext(GlobalStateContext);
+  const { getLevel, getUserErrors, getUserTime, getUserCorrectBlocks } =
+    useSelectors();
   const navigate = useNavigate();
+  const inputRef: React.Ref<any> = useRef(null);
+  const [isDisabled, setIsDisabled] = useState<{
+    isDisabled: boolean;
+    errorMessage: string;
+  }>({
+    isDisabled: true,
+    errorMessage: "username has to be atlest 4letters long",
+  });
+  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
 
   const handleRetry = () => {
     globalServices.gameService.send("RETRY");
@@ -25,7 +38,51 @@ const GameOver = () => {
   };
 
   const handleSubmit = () => {
-    return true;
+    const username = inputRef.current && inputRef.current?.value;
+    console.log(username);
+    const userCol = collection(globalServices.firestore, `users`);
+    const userDoc = doc(userCol, username);
+
+    if (
+      !isDisabled.isDisabled &&
+      !globalServices.userLeaderboard.some((user) => {
+        return user.username === username;
+      })
+    ) {
+      const postData: IUsers = {
+        username: username,
+        level: getLevel,
+        correctClicks: getUserCorrectBlocks,
+        errors: getUserErrors,
+        time: getUserTime,
+      };
+      setDoc(userDoc, postData).catch((error) => console.log(error));
+      setIsInputDisabled(true);
+      setIsDisabled({
+        isDisabled: true,
+        errorMessage: "",
+      });
+    } else {
+      setIsDisabled({
+        isDisabled: false,
+        errorMessage: "username exists",
+      });
+    }
+  };
+
+  const handleChange = () => {
+    const username = inputRef.current && inputRef.current?.value;
+    if (username === null || username.length < 4) {
+      setIsDisabled({
+        isDisabled: true,
+        errorMessage: "username has to be atlest 4letters long",
+      });
+    } else {
+      setIsDisabled({
+        isDisabled: false,
+        errorMessage: "",
+      });
+    }
   };
 
   return (
@@ -43,11 +100,23 @@ const GameOver = () => {
       </GaveOverInfo>
       <UserInputContainer>
         <Heading5>username:</Heading5>
-        <UserInput type="text" />
-        <StartButton type="button" onClick={handleSubmit}>
-          <Heading5>submit</Heading5>
+        <UserInput
+          ref={inputRef}
+          type="text"
+          id="username"
+          name="username"
+          onChange={handleChange}
+          disabled={isInputDisabled}
+        />
+        <StartButton
+          type="button"
+          onClick={handleSubmit}
+          disabled={isDisabled.isDisabled}
+        >
+          <Heading5>{isInputDisabled ? "submited" : "submit"}</Heading5>
         </StartButton>
       </UserInputContainer>
+      <Heading5 style={{ color: "red" }}>{isDisabled.errorMessage}</Heading5>
       <StartButton type="button" onClick={handleRetry}>
         <Heading1>Retry</Heading1>
       </StartButton>

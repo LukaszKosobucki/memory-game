@@ -6,17 +6,8 @@ import { GlobalStateContext } from "../../utils/ContextWrapper";
 
 const GameInfoHeader = () => {
   const globalServices = useContext(GlobalStateContext);
-  const {
-    hasLost,
-    getLevel,
-    getUserTime,
-    getUserErrors,
-    getUserCorrectBlocks,
-    getTimer,
-    isPeekBoard,
-    isPlaying,
-    getWin,
-  } = useSelectors();
+  const { hasLost, getLevel, getTimer, isPeekBoard, isPlaying, getWin } =
+    useSelectors();
   const [seconds, setSeconds] = useState<number>(getTimer);
   const [gameTimer, setGameTimer] = useState<ReturnType<typeof setTimeout>>();
 
@@ -60,8 +51,7 @@ const GameInfoHeader = () => {
       {!hasLost && <Heading4>level: {getLevel}</Heading4>}
       {hasLost && (
         <Heading3>
-          Your Score: {getLevel}! Your Time: {getUserTime}s Your Errors:{" "}
-          {getUserErrors} Your Correct Clicks: {getUserCorrectBlocks}
+          Your Score: {getLevel}!
           <br /> Congratulations!
         </Heading3>
       )}
