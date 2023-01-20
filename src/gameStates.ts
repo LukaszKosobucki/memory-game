@@ -12,11 +12,13 @@ export const gameMachine =
       level: number;
       time: number;
       board: TBoard[];
+      emptyBoard: TBoard[];
       sizes: TSize;
+      win: boolean;
     },
     | { type: "START" }
-    | { type: "END_COUNTING"; newBoard: TBoard[] }
-    | { type: "WIN_LEVEL"; newBoard: TBoard[] }
+    | { type: "END_COUNTING"; newBoard: TBoard[]; newEmptyBoard: TBoard[] }
+    | { type: "WIN_LEVEL"; newBoard: TBoard[]; newEmptyBoard: TBoard[] }
     | { type: "LOSE_GAME" }
     | { type: "SIGNED_IN" }
     | { type: "RETRY" }
@@ -29,6 +31,8 @@ export const gameMachine =
       level: 1,
       time: 2,
       board: [],
+      emptyBoard: [],
+      win: false,
       sizes: {
         level1: 3,
         level2: 3,
@@ -67,6 +71,8 @@ export const gameMachine =
             actions: assign({
               time: ({ time }) => (time = 2),
               board: (context, event) => (context.board = event.newBoard),
+              emptyBoard: (context, event) =>
+                (context.emptyBoard = event.newEmptyBoard),
             }),
           },
         },
@@ -77,11 +83,11 @@ export const gameMachine =
             target: "playing",
             actions: assign({
               time: ({ time }) => (time = 60),
+              win: ({ win }) => (win = false),
             }),
           },
         },
       },
-
       playing: {
         on: {
           WIN_LEVEL: {
@@ -90,16 +96,23 @@ export const gameMachine =
               level: ({ level }) => level + 1,
               time: ({ time }) => (time = 2),
               board: (context, event) => (context.board = event.newBoard),
+              emptyBoard: (context, event) =>
+                (context.emptyBoard = event.newEmptyBoard),
+              win: ({ win }) => (win = true),
             }),
           },
-          LOSE_GAME: { target: "endGame" },
+          LOSE_GAME: {
+            target: "endGame",
+            actions: assign({
+              time: ({ time }) => (time = 0),
+            }),
+          },
         },
       },
       endGame: {
         on: {
           SIGNED_IN: "signedIn",
           FAILED_TO_SIGN_IN: "endGame",
-
           RETRY: {
             target: "preGame",
             actions: assign({

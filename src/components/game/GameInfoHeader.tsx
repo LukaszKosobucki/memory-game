@@ -2,29 +2,38 @@ import { Heading3, Heading4 } from "../../global.styled";
 import { useSelectors } from "../../utils/selectors";
 import { GameInfoContainer } from "./GameBoard.styled";
 import { useEffect, useState, useContext } from "react";
-import { GlobalStateContext } from "../../ContextWrapper";
+import { GlobalStateContext } from "../../utils/ContextWrapper";
 
 const GameInfoHeader = () => {
   const globalServices = useContext(GlobalStateContext);
 
-  const { hasLost, getLevel, getTimer, isPeekBoard, isPlaying } =
+  const { hasLost, getLevel, getTimer, isPeekBoard, isPlaying, getWin } =
     useSelectors();
   const [seconds, setSeconds] = useState<number>(getTimer);
-  const [win, setWin] = useState<boolean>(false);
+  const [gameTimer, setGameTimer] = useState<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     if (seconds >= 0) {
-      let gameTimer = setTimeout(() => setSeconds(seconds - 1), 1000);
-      if (!isPlaying && seconds > 4) {
-        clearTimeout(gameTimer);
-      } else if (isPeekBoard && seconds === 0) {
-        clearTimeout(gameTimer);
-        globalServices.gameService.send({
-          type: "PEEK_BOARD",
-        });
+      if (isPlaying) {
+        let timer = setTimeout(() => setSeconds(seconds - 1), 1000);
+        setGameTimer(timer);
+        if (seconds <= 0) {
+          globalServices.gameService.send("LOSE_GAME");
+          clearTimeout(gameTimer);
+        }
       }
-    } else {
-      globalServices.gameService.send("LOSE_GAME");
+      if (getWin) {
+        clearTimeout(gameTimer);
+      }
+      if (isPeekBoard) {
+        let peekTimer = setTimeout(() => setSeconds(seconds - 1), 1000);
+        if (seconds === 0) {
+          globalServices.gameService.send({
+            type: "PEEK_BOARD",
+          });
+          clearTimeout(peekTimer);
+        }
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seconds]);
@@ -35,7 +44,6 @@ const GameInfoHeader = () => {
   return (
     <GameInfoContainer>
       {!hasLost && <Heading4>level: {getLevel}</Heading4>}
-
       {hasLost && (
         <Heading3>
           Your Score: {getLevel}!

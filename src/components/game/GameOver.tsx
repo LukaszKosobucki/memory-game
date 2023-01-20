@@ -8,8 +8,9 @@ import {
   UserInputContainer,
 } from "./GameBoard.styled";
 import { useContext } from "react";
-import { GlobalStateContext } from "../../ContextWrapper";
+import { GlobalStateContext } from "../../utils/ContextWrapper";
 import GameInfoHeader from "./GameInfoHeader";
+import { motion } from "framer-motion";
 
 const GameOver = () => {
   const globalServices = useContext(GlobalStateContext);
@@ -28,7 +29,12 @@ const GameOver = () => {
   };
 
   return (
-    <GaveOver>
+    <GaveOver
+      as={motion.div}
+      initial={{ opacity: 0.3 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <GameInfoHeader />
       <GaveOverInfo>
         <Heading5>

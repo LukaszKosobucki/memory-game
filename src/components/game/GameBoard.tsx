@@ -1,7 +1,5 @@
 import GameBlock from "./GameBlock";
 import { GameContainer } from "./GameBoard.styled";
-import { useContext } from "react";
-import { GlobalStateContext } from "../../ContextWrapper";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useSelectors } from "../../utils/selectors";
@@ -14,13 +12,15 @@ export type TBoard = {
 };
 
 const GameBoard = ({ size }: { size: number }) => {
-  const globalServices = useContext(GlobalStateContext);
-  const { isPlaying, getLevel, getSizes, getBoard } = useSelectors();
+  const { isPlaying, getLevel, getSizes, getBoard, getEmptyBoard } =
+    useSelectors();
   const [board, setBoard] = useState<TBoard[]>([]);
+  const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
 
   useEffect(() => {
     setBoard(getBoard);
-    console.log(getBoard);
+    setEmptyBoard(getEmptyBoard);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
 
   return (
@@ -38,14 +38,18 @@ const GameBoard = ({ size }: { size: number }) => {
                 id={block.id}
                 size={block.size}
                 selected={block.selected}
+                hover={false}
+                canClick={false}
               />
             ))
-          : board.map((block) => (
+          : emptyBoard.map((block) => (
               <GameBlock
                 key={block.id}
                 id={block.id}
                 size={block.size}
-                selected={false}
+                hover={true}
+                selected={block.selected}
+                canClick={true}
               />
             ))}
       </GameContainer>

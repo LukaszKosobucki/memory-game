@@ -5,7 +5,7 @@ import LeaderboardList from "../components/leaderboards/LeaderboardList";
 import { Heading1 } from "../global.styled";
 import { StartButton } from "./Start.styled";
 import { useContext } from "react";
-import { GlobalStateContext } from "../ContextWrapper";
+import { GlobalStateContext } from "../utils/ContextWrapper";
 
 const Leaderboards = () => {
   const navigate = useNavigate();

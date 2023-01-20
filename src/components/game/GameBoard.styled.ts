@@ -15,6 +15,7 @@ export const GameContainer = styled.div<{ boardSize: number }>`
 export const GameBlockContainer = styled.div<{
   blockSize: number;
   selected: boolean;
+  hover: boolean;
 }>`
   background-color: ${(props) =>
     props.selected ? colors.OrangeJusticeBasic : colors.WhiteDamnationBasic};
@@ -23,7 +24,8 @@ export const GameBlockContainer = styled.div<{
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
   &:hover {
-    background-color: ${colors.OrangeJusticeBasic};
+    ${(props) =>
+      props.hover && `background-color: ${colors.OrangeJusticeBasic}`};
   }
 `;
 
@@ -67,5 +69,7 @@ export const UserInput = styled.input`
 
 export const GamePrepareContainer = styled(GaveOver)`
   gap: 3rem;
-  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

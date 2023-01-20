@@ -4,7 +4,7 @@ import Counting from "../components/game/Counting";
 import GameBoard from "../components/game/GameBoard";
 import GameOver from "../components/game/GameOver";
 import GamePrepare from "../components/game/GamePrepare";
-import { GlobalStateContext } from "../ContextWrapper";
+import { GlobalStateContext } from "../utils/ContextWrapper";
 import { useSelectors } from "../utils/selectors";
 
 const Game = () => {

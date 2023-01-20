@@ -1,6 +1,7 @@
 import { useSelector } from "@xstate/react";
-import { useContext } from "react";
-import { GlobalStateContext } from "../ContextWrapper";
+import { useContext, useEffect } from "react";
+import { TBoard } from "../components/game/GameBoard";
+import { GlobalStateContext } from "./ContextWrapper";
 
 export const endGame = (state: any) => {
   return state.matches("endGame");
@@ -29,6 +30,12 @@ const debuglog = (state: any) => {
 const board = (state: any) => {
   return state.context.board;
 };
+const emptyBoard = (state: any) => {
+  return state.context.emptyBoard;
+};
+const win = (state: any) => {
+  return state.context.win;
+};
 
 export const useSelectors = () => {
   const globalServices = useContext(GlobalStateContext);
@@ -42,28 +49,64 @@ export const useSelectors = () => {
   const getState = useSelector(globalServices.gameService, debuglog);
   const getSizes = useSelector(globalServices.gameService, sizes);
   const getBoard = useSelector(globalServices.gameService, board);
+  const getEmptyBoard = useSelector(globalServices.gameService, emptyBoard);
+  const getWin = useSelector(globalServices.gameService, win);
 
-  const mockBoardMaker = (level: number) => {
-    let mockBoard = [];
+  const emptyBoardMaker = (level: number) => {
+    const emptyBoard = [];
     const size = getSizes[`level${level}`];
     for (let i = 0; i < size ** 2; i++) {
-      mockBoard.push({ id: i, selected: false, size: size });
+      emptyBoard.push({ id: i, selected: false, size: size });
     }
-    const numberOfColoredBlocks = getLevel + 2;
+    return emptyBoard.slice();
+  };
+
+  const boardMaker = (level: number) => {
+    let board: TBoard[] = [];
+    const size = getSizes[`level${level}`];
+    for (let i = 0; i < size ** 2; i++) {
+      board.push({ id: i, selected: false, size: size });
+    }
+    const numberOfColoredBlocks = level + 2;
     let numberOfAddedColors = 0;
-    console.log(numberOfAddedColors);
+    console.log("number of Added colors", numberOfAddedColors);
     while (numberOfAddedColors < numberOfColoredBlocks) {
       const randomNumber = Math.random();
       if (randomNumber > 0.5) {
-        mockBoard[Math.floor(Math.random() * size ** 2)]["selected"] = true;
-        console.log(mockBoard);
+        board[Math.floor(Math.random() * size ** 2)]["selected"] = true;
       }
-      numberOfAddedColors = mockBoard.filter(
-        (obj) => obj.selected === true
-      ).length;
-      console.log(numberOfAddedColors);
+      numberOfAddedColors = board.filter((obj) => obj.selected === true).length;
+      console.log("number of Added colors", numberOfAddedColors);
     }
-    return mockBoard;
+    return board.slice();
+  };
+
+  useEffect(() => {
+    if (globalServices.errorCounter === 3) {
+      globalServices.gameService.send("LOSE_GAME");
+      globalServices.setErrorCounter(0);
+    }
+    if (
+      getBoard.filter((obj: TBoard) => obj.selected === true).length ===
+      getEmptyBoard.filter((obj: TBoard) => obj.selected === true).length
+    ) {
+      globalServices.gameService.send({
+        type: "WIN_LEVEL",
+        newBoard: boardMaker(getLevel + 1),
+        newEmptyBoard: emptyBoardMaker(getLevel + 1),
+      });
+      globalServices.setErrorCounter(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalServices.errorCounter, globalServices.correctCounter]);
+
+  const handleClick = (id: number) => {
+    if (getBoard[id].selected === true) {
+      getEmptyBoard[id].selected = true;
+      globalServices.setCorrectCounter(globalServices.correctCounter + 1);
+    } else {
+      globalServices.setErrorCounter(globalServices.errorCounter + 1);
+    }
   };
 
   return {
@@ -75,7 +118,11 @@ export const useSelectors = () => {
     isCounting: isCounting,
     getState: getState,
     getSizes: getSizes,
-    mockBoardMaker: mockBoardMaker,
+    boardMaker: boardMaker,
     getBoard: getBoard,
+    getWin: getWin,
+    handleClick: handleClick,
+    emptyBoardMaker: emptyBoardMaker,
+    getEmptyBoard: getEmptyBoard,
   };
 };

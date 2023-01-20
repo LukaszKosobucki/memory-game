@@ -3,7 +3,7 @@ import { StartButton } from "../../pages/Start.styled";
 import { GamePrepareContainer } from "./GameBoard.styled";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { GlobalStateContext } from "../../ContextWrapper";
+import { GlobalStateContext } from "../../utils/ContextWrapper";
 
 const GamePrepare = () => {
   const navigate = useNavigate();
