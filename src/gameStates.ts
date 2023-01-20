@@ -15,11 +15,26 @@ export const gameMachine =
       emptyBoard: TBoard[];
       sizes: TSize;
       win: boolean;
+      userTime: number;
+      userErrors: number;
+      userCorrectBlocks: number;
     },
     | { type: "START" }
     | { type: "END_COUNTING"; newBoard: TBoard[]; newEmptyBoard: TBoard[] }
-    | { type: "WIN_LEVEL"; newBoard: TBoard[]; newEmptyBoard: TBoard[] }
-    | { type: "LOSE_GAME" }
+    | {
+        type: "WIN_LEVEL";
+        newBoard: TBoard[];
+        newEmptyBoard: TBoard[];
+        newUserTime: number;
+        newUserErrors: number;
+        newUserCorrectBlocks: number;
+      }
+    | {
+        type: "LOSE_GAME";
+        newUserTime: number;
+        newUserErrors: number;
+        newUserCorrectBlocks: number;
+      }
     | { type: "SIGNED_IN" }
     | { type: "RETRY" }
     | { type: "FAILED_TO_SIGN_IN" }
@@ -33,6 +48,9 @@ export const gameMachine =
       board: [],
       emptyBoard: [],
       win: false,
+      userTime: 0,
+      userErrors: 0,
+      userCorrectBlocks: 0,
       sizes: {
         level1: 3,
         level2: 3,
@@ -98,6 +116,12 @@ export const gameMachine =
               board: (context, event) => (context.board = event.newBoard),
               emptyBoard: (context, event) =>
                 (context.emptyBoard = event.newEmptyBoard),
+              userTime: (context, event) =>
+                (context.userTime += event.newUserTime),
+              userErrors: (context, event) =>
+                (context.userErrors += event.newUserErrors),
+              userCorrectBlocks: (context, event) =>
+                (context.userCorrectBlocks = event.newUserCorrectBlocks),
               win: ({ win }) => (win = true),
             }),
           },
@@ -105,6 +129,12 @@ export const gameMachine =
             target: "endGame",
             actions: assign({
               time: ({ time }) => (time = 0),
+              userTime: (context, event) =>
+                (context.userTime += event.newUserTime),
+              userErrors: (context, event) =>
+                (context.userErrors += event.newUserErrors),
+              userCorrectBlocks: (context, event) =>
+                (context.userCorrectBlocks = event.newUserCorrectBlocks),
             }),
           },
         },

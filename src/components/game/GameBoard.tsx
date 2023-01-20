@@ -31,6 +31,7 @@ const GameBoard = ({ size }: { size: number }) => {
     >
       <GameContainer boardSize={300 + getSizes[`level${getLevel}`] * 20}>
         <GameInfoHeader />
+
         {!isPlaying
           ? board.map((block) => (
               <GameBlock

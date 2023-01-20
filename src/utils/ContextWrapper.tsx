@@ -10,6 +10,8 @@ interface GlobalStateContextType {
   setErrorCounter: React.Dispatch<React.SetStateAction<number>>;
   setCorrectCounter: React.Dispatch<React.SetStateAction<number>>;
   correctCounter: number;
+  setUserTime: React.Dispatch<React.SetStateAction<number>>;
+  userTime: number;
 }
 
 export const GlobalStateContext = createContext<GlobalStateContextType>(
@@ -20,6 +22,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
   const gameService = useInterpret(gameMachine);
   const [errorCounter, setErrorCounter] = useState<number>(0);
   const [correctCounter, setCorrectCounter] = useState<number>(0);
+  const [userTime, setUserTime] = useState<number>(0);
 
   const value: GlobalStateContextType = {
     gameService,
@@ -27,6 +30,8 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     setErrorCounter,
     setCorrectCounter,
     correctCounter,
+    userTime,
+    setUserTime,
   };
 
   return (

@@ -6,9 +6,17 @@ import { GlobalStateContext } from "../../utils/ContextWrapper";
 
 const GameInfoHeader = () => {
   const globalServices = useContext(GlobalStateContext);
-
-  const { hasLost, getLevel, getTimer, isPeekBoard, isPlaying, getWin } =
-    useSelectors();
+  const {
+    hasLost,
+    getLevel,
+    getUserTime,
+    getUserErrors,
+    getUserCorrectBlocks,
+    getTimer,
+    isPeekBoard,
+    isPlaying,
+    getWin,
+  } = useSelectors();
   const [seconds, setSeconds] = useState<number>(getTimer);
   const [gameTimer, setGameTimer] = useState<ReturnType<typeof setTimeout>>();
 
@@ -17,8 +25,14 @@ const GameInfoHeader = () => {
       if (isPlaying) {
         let timer = setTimeout(() => setSeconds(seconds - 1), 1000);
         setGameTimer(timer);
+        globalServices.setUserTime(60 - seconds);
         if (seconds <= 0) {
-          globalServices.gameService.send("LOSE_GAME");
+          globalServices.gameService.send({
+            type: "LOSE_GAME",
+            newUserTime: globalServices.userTime,
+            newUserErrors: globalServices.errorCounter,
+            newUserCorrectBlocks: globalServices.correctCounter,
+          });
           clearTimeout(gameTimer);
         }
       }
@@ -46,7 +60,8 @@ const GameInfoHeader = () => {
       {!hasLost && <Heading4>level: {getLevel}</Heading4>}
       {hasLost && (
         <Heading3>
-          Your Score: {getLevel}!
+          Your Score: {getLevel}! Your Time: {getUserTime}s Your Errors:{" "}
+          {getUserErrors} Your Correct Clicks: {getUserCorrectBlocks}
           <br /> Congratulations!
         </Heading3>
       )}

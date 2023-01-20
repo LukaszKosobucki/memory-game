@@ -36,6 +36,15 @@ const emptyBoard = (state: any) => {
 const win = (state: any) => {
   return state.context.win;
 };
+const userTime = (state: any) => {
+  return state.context.userTime;
+};
+const userErrors = (state: any) => {
+  return state.context.userErrors;
+};
+const userCorrectBlocks = (state: any) => {
+  return state.context.userCorrectBlocks;
+};
 
 export const useSelectors = () => {
   const globalServices = useContext(GlobalStateContext);
@@ -51,6 +60,12 @@ export const useSelectors = () => {
   const getBoard = useSelector(globalServices.gameService, board);
   const getEmptyBoard = useSelector(globalServices.gameService, emptyBoard);
   const getWin = useSelector(globalServices.gameService, win);
+  const getUserTime = useSelector(globalServices.gameService, userTime);
+  const getUserErrors = useSelector(globalServices.gameService, userErrors);
+  const getUserCorrectBlocks = useSelector(
+    globalServices.gameService,
+    userCorrectBlocks
+  );
 
   const emptyBoardMaker = (level: number) => {
     const emptyBoard = [];
@@ -83,8 +98,14 @@ export const useSelectors = () => {
 
   useEffect(() => {
     if (globalServices.errorCounter === 3) {
-      globalServices.gameService.send("LOSE_GAME");
+      globalServices.gameService.send({
+        type: "LOSE_GAME",
+        newUserTime: globalServices.userTime,
+        newUserErrors: globalServices.errorCounter,
+        newUserCorrectBlocks: globalServices.correctCounter,
+      });
       globalServices.setErrorCounter(0);
+      globalServices.setCorrectCounter(0);
     }
     if (
       getBoard.filter((obj: TBoard) => obj.selected === true).length ===
@@ -94,6 +115,9 @@ export const useSelectors = () => {
         type: "WIN_LEVEL",
         newBoard: boardMaker(getLevel + 1),
         newEmptyBoard: emptyBoardMaker(getLevel + 1),
+        newUserTime: globalServices.userTime,
+        newUserErrors: globalServices.errorCounter,
+        newUserCorrectBlocks: globalServices.correctCounter,
       });
       globalServices.setErrorCounter(0);
     }
@@ -124,5 +148,8 @@ export const useSelectors = () => {
     handleClick: handleClick,
     emptyBoardMaker: emptyBoardMaker,
     getEmptyBoard: getEmptyBoard,
+    getUserTime: getUserTime,
+    getUserErrors: getUserErrors,
+    getUserCorrectBlocks: getUserCorrectBlocks,
   };
 };

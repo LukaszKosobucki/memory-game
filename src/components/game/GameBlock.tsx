@@ -1,5 +1,6 @@
 import { useSelectors } from "../../utils/selectors";
 import { GameBlockContainer } from "./GameBoard.styled";
+import { motion } from "framer-motion";
 
 const GameBlock = ({
   id,
@@ -18,12 +19,20 @@ const GameBlock = ({
   const blockSize = 100 - (size - 3) * 15;
 
   return (
-    <GameBlockContainer
-      onClick={() => canClick && handleClick(id)}
-      blockSize={blockSize}
-      selected={selected}
-      hover={hover}
-    ></GameBlockContainer>
+    <motion.div
+      key="Start"
+      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0.3 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <GameBlockContainer
+        onClick={() => canClick && handleClick(id)}
+        blockSize={blockSize}
+        selected={selected}
+        hover={hover}
+      ></GameBlockContainer>
+    </motion.div>
   );
 };
 
