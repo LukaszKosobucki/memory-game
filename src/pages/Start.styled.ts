@@ -7,6 +7,12 @@ export const StartButton = styled.button`
   border: none;
   cursor: pointer;
   margin: auto;
+  animation: glow 1s infinite alternate;
+  @keyframes glow {
+    to {
+      text-shadow: 0 0 10px ${colors.OrangeJusticeBasic};
+    }
+  }
 `;
 
 export const StartContainer = styled.div`
