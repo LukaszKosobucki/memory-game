@@ -21,7 +21,7 @@ export const StartContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 640px;
-  height: 670px;
+  height: 600px;
   gap: 1rem;
 `;
 

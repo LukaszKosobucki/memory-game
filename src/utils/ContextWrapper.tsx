@@ -22,6 +22,8 @@ interface GlobalStateContextType {
   userTime: number;
   userLeaderboard: IUsers[];
   firestore: Firestore;
+  isInputDisabled: boolean;
+  setIsInputDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IUsers {
@@ -42,6 +44,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
   const [correctCounter, setCorrectCounter] = useState<number>(0);
   const [userTime, setUserTime] = useState<number>(0);
   const [userLeaderboard, setUserLeaderboard] = useState<IUsers[]>([]);
+  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
 
   const firebaseApp = initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
@@ -65,6 +68,8 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     setUserTime,
     userLeaderboard,
     firestore,
+    isInputDisabled,
+    setIsInputDisabled,
   };
 
   return (

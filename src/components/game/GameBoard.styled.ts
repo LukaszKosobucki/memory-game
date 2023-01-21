@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../global.styled";
+import { colors, Heading5 } from "../../global.styled";
 import { motion } from "framer-motion";
 
 export const GameContainer = styled.div<{ boardSize: number }>`
@@ -72,4 +72,10 @@ export const GamePrepareContainer = styled(GaveOver)`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+//change to paragraph styles, with lower margin to top
+export const ErrorMessage = styled(Heading5)`
+  margin-top: -1.5rem;
+  color: ${colors.OrangeJusticeBasic};
 `;

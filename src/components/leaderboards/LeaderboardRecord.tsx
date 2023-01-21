@@ -1,6 +1,10 @@
-import { Heading4 } from "../../global.styled";
 import { IUsers } from "../../utils/ContextWrapper";
-import { LeaderboardRecordContainer } from "./Leaderboard.styled";
+import {
+  LeaderboardLevel,
+  LeaderboardName,
+  LeaderboardNumber,
+  LeaderboardRecordContainer,
+} from "./Leaderboard.styled";
 
 const LeaderboardRecord = ({
   user,
@@ -11,9 +15,14 @@ const LeaderboardRecord = ({
 }) => {
   return (
     <LeaderboardRecordContainer>
-      <Heading4>no.{index + 1}</Heading4>
-      <Heading4>{user.username}</Heading4>
-      <Heading4>level: {user.level}</Heading4>
+      <LeaderboardNumber>no.{index + 1}</LeaderboardNumber>
+      <LeaderboardName>
+        {[1, 2, 3].includes(index + 1) && (
+          <img src={`/medal${index + 1}.png`} alt="" />
+        )}
+        {user.username}
+      </LeaderboardName>
+      <LeaderboardLevel>level: {user.level}</LeaderboardLevel>
     </LeaderboardRecordContainer>
   );
 };
