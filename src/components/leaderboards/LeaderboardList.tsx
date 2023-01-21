@@ -5,7 +5,6 @@ import LeaderboardRecord from "./LeaderboardRecord";
 
 const LeaderboardList = () => {
   const globalServices = useContext(GlobalStateContext);
-  console.log(globalServices.userLeaderboard);
   return (
     <LeaderboardListContainer>
       {globalServices.userLeaderboard

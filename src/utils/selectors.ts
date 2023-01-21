@@ -84,14 +84,12 @@ export const useSelectors = () => {
     }
     const numberOfColoredBlocks = level + 2;
     let numberOfAddedColors = 0;
-    console.log("number of Added colors", numberOfAddedColors);
     while (numberOfAddedColors < numberOfColoredBlocks) {
       const randomNumber = Math.random();
       if (randomNumber > 0.5) {
         board[Math.floor(Math.random() * size ** 2)]["selected"] = true;
       }
       numberOfAddedColors = board.filter((obj) => obj.selected === true).length;
-      console.log("number of Added colors", numberOfAddedColors);
     }
     return board.slice();
   };

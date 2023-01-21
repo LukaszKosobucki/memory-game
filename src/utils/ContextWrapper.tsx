@@ -54,7 +54,6 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     onSnapshot(userCol, (snapshot) => {
       setUserLeaderboard(snapshot.docs.map((doc) => doc.data() as IUsers));
     });
-    console.log(userLeaderboard);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
