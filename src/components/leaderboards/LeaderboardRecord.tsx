@@ -16,7 +16,12 @@ const LeaderboardRecord = ({
   return (
     <LeaderboardRecordContainer>
       <LeaderboardNumber>no.{index + 1}</LeaderboardNumber>
-      <LeaderboardName>{user.username}</LeaderboardName>
+      <LeaderboardName>
+        {[1, 2, 3].includes(index + 1) && (
+          <img src={`/medal${index + 1}.png`} alt="" />
+        )}
+        {user.username}
+      </LeaderboardName>
       <LeaderboardLevel>level: {user.level}</LeaderboardLevel>
     </LeaderboardRecordContainer>
   );
