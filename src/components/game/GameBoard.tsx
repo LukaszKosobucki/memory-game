@@ -12,7 +12,7 @@ export type TBoard = {
 };
 
 const GameBoard = ({ size }: { size: number }) => {
-  const { isPlaying, getLevel, getSizes, getBoard, getEmptyBoard } =
+  const { isPlaying, getLevel, getSize, getBoard, getEmptyBoard } =
     useSelectors();
   const [board, setBoard] = useState<TBoard[]>([]);
   const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
@@ -31,7 +31,7 @@ const GameBoard = ({ size }: { size: number }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <GameContainer boardSize={300 + getSizes[`level${getLevel}`] * 20}>
+      <GameContainer boardSize={300 + getSize * 20}>
         <GameInfoHeader />
 
         {!isPlaying

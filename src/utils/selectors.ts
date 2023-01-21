@@ -12,8 +12,8 @@ export const level = (state: any) => {
 export const timer = (state: any) => {
   return state.context.time;
 };
-export const sizes = (state: any) => {
-  return state.context.sizes;
+export const size = (state: any) => {
+  return state.context.size;
 };
 export const playing = (state: any) => {
   return state.matches("playing");
@@ -56,7 +56,7 @@ export const useSelectors = () => {
   const isPeekBoard = useSelector(globalServices.gameService, peekBoard);
   const isCounting = useSelector(globalServices.gameService, countdown);
   const getState = useSelector(globalServices.gameService, debuglog);
-  const getSizes = useSelector(globalServices.gameService, sizes);
+  const getSize = useSelector(globalServices.gameService, size);
   const getBoard = useSelector(globalServices.gameService, board);
   const getEmptyBoard = useSelector(globalServices.gameService, emptyBoard);
   const getWin = useSelector(globalServices.gameService, win);
@@ -69,7 +69,7 @@ export const useSelectors = () => {
 
   const emptyBoardMaker = (level: number) => {
     const emptyBoard = [];
-    const size = getSizes[`level${level}`];
+    const size = getSize;
     for (let i = 0; i < size ** 2; i++) {
       emptyBoard.push({ id: i, selected: false, size: size });
     }
@@ -78,7 +78,7 @@ export const useSelectors = () => {
 
   const boardMaker = (level: number) => {
     let board: TBoard[] = [];
-    const size = getSizes[`level${level}`];
+    const size = getSize;
     for (let i = 0; i < size ** 2; i++) {
       board.push({ id: i, selected: false, size: size });
     }
@@ -139,7 +139,7 @@ export const useSelectors = () => {
     isPeekBoard: isPeekBoard,
     isCounting: isCounting,
     getState: getState,
-    getSizes: getSizes,
+    getSize: getSize,
     boardMaker: boardMaker,
     getBoard: getBoard,
     getWin: getWin,
