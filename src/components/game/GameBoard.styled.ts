@@ -17,6 +17,7 @@ export const GameBlockContainer = styled.div<{
   selected: boolean;
   hover: boolean;
   wrongSelected: boolean | undefined;
+  marginSize: number;
 }>`
   background-color: ${(props) => {
     if (props.selected) {
@@ -27,7 +28,7 @@ export const GameBlockContainer = styled.div<{
     return colors.WhiteDamnationBasic;
   }};
   border-radius: 15px;
-  margin: 5px;
+  margin: ${(props) => `${props.marginSize}px`};
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
   ${(props) =>

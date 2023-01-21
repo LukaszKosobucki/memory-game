@@ -32,7 +32,14 @@ const GameBoard = ({ size }: { size: number }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <GameContainer boardSize={300 + getSize * 20}>
+      <GameContainer
+        boardSize={
+          300 +
+          (getSize <= 6
+            ? getSize * (20 - (getSize === 6 ? 5 : 0))
+            : getSize * 5)
+        }
+      >
         <GameInfoHeader />
 
         {!isPlaying

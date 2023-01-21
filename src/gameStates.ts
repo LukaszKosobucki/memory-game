@@ -93,7 +93,9 @@ export const gameMachine =
             actions: assign({
               level: ({ level }) => level + 1,
               size: ({ level, size }) =>
-                size ** 2 / (level + 3) < 1.6 ? (size += 1) : size,
+                size ** 2 / (level + 3) < 2 - 0.2 * (size - 3)
+                  ? (size += 1)
+                  : size,
               time: ({ time, level }) => (time = 2 + level * 0.1),
               board: (context, event) => (context.board = event.newBoard),
               emptyBoard: (context, event) =>
