@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useMemo } from "react";
 import { useInterpret } from "@xstate/react";
 import { ActorRefFrom } from "xstate";
 import { gameMachine } from "../gameStates";
@@ -57,7 +57,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const value: GlobalStateContextType = {
+  const values = {
     gameService,
     errorCounter,
     setErrorCounter,
@@ -71,8 +71,26 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     setIsInputDisabled,
   };
 
+  const cachedValue = useMemo(
+    () => values,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      gameService,
+      errorCounter,
+      setErrorCounter,
+      setCorrectCounter,
+      correctCounter,
+      userTime,
+      setUserTime,
+      userLeaderboard,
+      firestore,
+      isInputDisabled,
+      setIsInputDisabled,
+    ]
+  );
+
   return (
-    <GlobalStateContext.Provider value={value}>
+    <GlobalStateContext.Provider value={cachedValue}>
       {children}
     </GlobalStateContext.Provider>
   );
