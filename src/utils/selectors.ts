@@ -71,7 +71,12 @@ export const useSelectors = () => {
     const emptyBoard = [];
     const size = getSize;
     for (let i = 0; i < size ** 2; i++) {
-      emptyBoard.push({ id: i, selected: false, size: size });
+      emptyBoard.push({
+        id: i,
+        selected: false,
+        size: size,
+        wrongSelected: false,
+      });
     }
     return emptyBoard.slice();
   };
@@ -127,6 +132,8 @@ export const useSelectors = () => {
       getEmptyBoard[id].selected = true;
       globalServices.setCorrectCounter(globalServices.correctCounter + 1);
     } else {
+      getEmptyBoard[id].wrongSelected = true;
+      console.log(getEmptyBoard[id].wrongSelected);
       globalServices.setErrorCounter(globalServices.errorCounter + 1);
     }
   };

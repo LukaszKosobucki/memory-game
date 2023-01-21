@@ -9,6 +9,7 @@ export type TBoard = {
   id: number;
   selected: boolean;
   size: number;
+  wrongSelected?: boolean;
 };
 
 const GameBoard = ({ size }: { size: number }) => {
@@ -52,6 +53,7 @@ const GameBoard = ({ size }: { size: number }) => {
                 size={block.size}
                 hover={true}
                 selected={block.selected}
+                wrongSelected={block.wrongSelected}
                 canClick={true}
               />
             ))}

@@ -6,12 +6,14 @@ const GameBlock = ({
   id,
   size,
   selected,
+  wrongSelected,
   hover,
   canClick,
 }: {
   id: number;
   size: number;
   selected: boolean;
+  wrongSelected?: boolean;
   hover: boolean;
   canClick: boolean;
 }) => {
@@ -31,6 +33,7 @@ const GameBlock = ({
         blockSize={blockSize}
         selected={selected}
         hover={hover}
+        wrongSelected={wrongSelected}
       ></GameBlockContainer>
     </motion.div>
   );
