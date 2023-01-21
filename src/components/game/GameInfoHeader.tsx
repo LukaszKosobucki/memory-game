@@ -18,6 +18,7 @@ const GameInfoHeader = () => {
         setGameTimer(timer);
         globalServices.setUserTime(60 - seconds);
         if (seconds <= 0) {
+          globalServices.setIsInputDisabled(false);
           globalServices.gameService.send({
             type: "LOSE_GAME",
             newUserTime: globalServices.userTime,

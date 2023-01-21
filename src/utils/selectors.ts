@@ -109,6 +109,7 @@ export const useSelectors = () => {
       });
       globalServices.setErrorCounter(0);
       globalServices.setCorrectCounter(0);
+      globalServices.setIsInputDisabled(false);
     }
     if (
       getBoard.filter((obj: TBoard) => obj.selected === true).length ===
