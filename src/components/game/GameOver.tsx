@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Heading1, Heading4, Heading5 } from "../../global.styled";
 import { StartButton } from "../../pages/Start.styled";
 import {
+  ErrorMessage,
   GaveOver,
   GaveOverInfo,
   UserInput,
@@ -27,7 +28,6 @@ const GameOver = () => {
     isDisabled: true,
     errorMessage: "username has to be atlest 4letters long",
   });
-  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
 
   const handleRetry = () => {
     globalServices.gameService.send("RETRY");
@@ -45,6 +45,7 @@ const GameOver = () => {
 
     if (
       !isDisabled.isDisabled &&
+      !globalServices.isInputDisabled &&
       !globalServices.userLeaderboard.some((user) => {
         return user.username === username;
       })
@@ -56,16 +57,22 @@ const GameOver = () => {
         errors: getUserErrors,
         time: getUserTime,
       };
-      setDoc(userDoc, postData).catch((error) => console.log(error));
-      setIsInputDisabled(true);
+      setDoc(userDoc, postData)
+        .then(() => globalServices.setIsInputDisabled(true))
+        .catch((error) => console.log(error));
       setIsDisabled({
         isDisabled: true,
         errorMessage: "",
       });
+    } else if (globalServices.isInputDisabled) {
+      setIsDisabled({
+        isDisabled: false,
+        errorMessage: "you already submitted your score",
+      });
     } else {
       setIsDisabled({
         isDisabled: false,
-        errorMessage: "username exists",
+        errorMessage: "user already exists",
       });
     }
   };
@@ -106,17 +113,19 @@ const GameOver = () => {
           id="username"
           name="username"
           onChange={handleChange}
-          disabled={isInputDisabled}
+          disabled={globalServices.isInputDisabled}
         />
         <StartButton
           type="button"
           onClick={handleSubmit}
           disabled={isDisabled.isDisabled}
         >
-          <Heading5>{isInputDisabled ? "submited" : "submit"}</Heading5>
+          <Heading5>
+            {globalServices.isInputDisabled ? "submited" : "submit"}
+          </Heading5>
         </StartButton>
       </UserInputContainer>
-      <Heading5 style={{ color: "red" }}>{isDisabled.errorMessage}</Heading5>
+      <ErrorMessage>{isDisabled.errorMessage}</ErrorMessage>
       <StartButton type="button" onClick={handleRetry}>
         <Heading1>Retry</Heading1>
       </StartButton>

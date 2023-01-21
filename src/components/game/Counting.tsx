@@ -1,9 +1,8 @@
 import { GlobalStateContext } from "../../utils/ContextWrapper";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GamePrepareContainer } from "./GameBoard.styled";
 import { Heading1 } from "../../global.styled";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import { useSelectors } from "../../utils/selectors";
 
 const Counting = () => {
