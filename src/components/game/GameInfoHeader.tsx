@@ -1,6 +1,6 @@
 import { Heading3, Heading4 } from "../../global.styled";
 import { useSelectors } from "../../utils/selectors";
-import { GameInfoContainer } from "./GameBoard.styled";
+import { GameInfoContainer, TimerBlock } from "./GameBoard.styled";
 import { useEffect, useState, useContext } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 
@@ -31,7 +31,10 @@ const GameInfoHeader = () => {
         clearTimeout(gameTimer);
       }
       if (isPeekBoard) {
-        let peekTimer = setTimeout(() => setSeconds(seconds - 1), 1000);
+        let peekTimer = setTimeout(
+          () => setSeconds(Math.round((seconds - 0.1) * 10) / 10),
+          100
+        );
         if (seconds === 0) {
           globalServices.gameService.send({
             type: "PEEK_BOARD",
@@ -48,14 +51,20 @@ const GameInfoHeader = () => {
   }, [getTimer]);
   return (
     <GameInfoContainer>
-      {!hasLost && <Heading4>level: {getLevel}</Heading4>}
-      {hasLost && (
+      {!hasLost && <TimerBlock>level: {getLevel}</TimerBlock>}
+      {hasLost ? (
         <Heading3>
-          Your Score: {getLevel}!
+          Your Score: {getLevel}
           <br /> Congratulations!
         </Heading3>
+      ) : (
+        <Heading4>errors: {globalServices.errorCounter}</Heading4>
       )}
-      {!hasLost && <Heading4>time: {seconds}s</Heading4>}
+      {!hasLost && (
+        <TimerBlock>
+          time:<TimerBlock>{seconds}</TimerBlock> s
+        </TimerBlock>
+      )}
     </GameInfoContainer>
   );
 };

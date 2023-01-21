@@ -39,7 +39,6 @@ const GameOver = () => {
 
   const handleSubmit = () => {
     const username = inputRef.current && inputRef.current?.value;
-    console.log(username);
     const userCol = collection(globalServices.firestore, `users`);
     const userDoc = doc(userCol, username);
 
@@ -59,7 +58,7 @@ const GameOver = () => {
       };
       setDoc(userDoc, postData)
         .then(() => globalServices.setIsInputDisabled(true))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error.value));
       setIsDisabled({
         isDisabled: true,
         errorMessage: "",

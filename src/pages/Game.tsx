@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+
 import Counting from "../components/game/Counting";
 import GameBoard from "../components/game/GameBoard";
 import GameOver from "../components/game/GameOver";
@@ -7,12 +7,7 @@ import GamePrepare from "../components/game/GamePrepare";
 import { useSelectors } from "../utils/selectors";
 
 const Game = () => {
-  const { isCounting, isPlaying, isPeekBoard, hasLost, getState } =
-    useSelectors();
-
-  useEffect(() => {
-    console.log(getState.value);
-  }, [getState.value]);
+  const { isCounting, isPlaying, isPeekBoard, hasLost } = useSelectors();
 
   return (
     <motion.div

@@ -6,18 +6,20 @@ const GameBlock = ({
   id,
   size,
   selected,
+  wrongSelected,
   hover,
   canClick,
 }: {
   id: number;
   size: number;
   selected: boolean;
+  wrongSelected?: boolean;
   hover: boolean;
   canClick: boolean;
 }) => {
   const { handleClick } = useSelectors();
   const blockSize = 100 - (size - 3) * 15;
-
+  const marginSize = 4 - (size - 4) * 1;
   return (
     <motion.div
       key="Start"
@@ -27,10 +29,12 @@ const GameBlock = ({
       exit={{ opacity: 0 }}
     >
       <GameBlockContainer
-        onClick={() => canClick && handleClick(id)}
+        onClick={() => canClick && !wrongSelected && handleClick(id)}
         blockSize={blockSize}
         selected={selected}
         hover={hover}
+        wrongSelected={wrongSelected}
+        marginSize={marginSize}
       ></GameBlockContainer>
     </motion.div>
   );

@@ -9,10 +9,11 @@ export type TBoard = {
   id: number;
   selected: boolean;
   size: number;
+  wrongSelected?: boolean;
 };
 
 const GameBoard = ({ size }: { size: number }) => {
-  const { isPlaying, getLevel, getSizes, getBoard, getEmptyBoard } =
+  const { isPlaying, getLevel, getSize, getBoard, getEmptyBoard } =
     useSelectors();
   const [board, setBoard] = useState<TBoard[]>([]);
   const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
@@ -31,7 +32,14 @@ const GameBoard = ({ size }: { size: number }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <GameContainer boardSize={300 + getSizes[`level${getLevel}`] * 20}>
+      <GameContainer
+        boardSize={
+          300 +
+          (getSize <= 6
+            ? getSize * (20 - (getSize === 6 ? 5 : 0))
+            : getSize * 5)
+        }
+      >
         <GameInfoHeader />
 
         {!isPlaying
@@ -52,6 +60,7 @@ const GameBoard = ({ size }: { size: number }) => {
                 size={block.size}
                 hover={true}
                 selected={block.selected}
+                wrongSelected={block.wrongSelected}
                 canClick={true}
               />
             ))}
