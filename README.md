@@ -1,6 +1,6 @@
 ### Short Description
 
-The game was made in free time as a project for fun. I love those types of games and I'm definitely going to make more of them. It was a challenging project mainly because of optimizaiton problems for mobile devices. 
+The game was made in free time as a project for fun. Since I love those types of games it was a breeze working on it. I'm definitely going to make more of memory like games. It was a challenging project mainly because of optimizaiton problems for mobile devices. 
 
 <some screenshots of the webpage to be added here> 
   
