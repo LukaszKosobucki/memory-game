@@ -4,7 +4,7 @@ The game was made in free time as a project for fun. I love those types of games
 
 <some screenshots of the webpage to be added here> 
   
-  ![leaderboard]([http://url/to/img.png](https://drive.google.com/file/d/1Ctm6S0TOe38qCDvAqzMM9H-0KncRTB1q/view?usp=sharing))
+  ![leaderboard](https://imgur.com/8Odzw2z)
 
 ### During the development I have worked on different features:
 
