@@ -9,10 +9,10 @@ The game was made in free time as a project for fun. I love those types of games
 * Designing the App from the ground using Figma.
 * Implementation of the App using React with Typescript.
 * Simple firestore database for leaderboard.
-* ~~Testing with Jest.
+* ~~Testing with Jest.~~
 * xState for state management.
 * Styling with styled-components and framer/motion.
-* ~~Support for mobile devices using media-queries.
+* ~~Support for mobile devices using media-queries.~~
 
 ### Where to see the outcome of this project? 
 
@@ -22,7 +22,7 @@ You can see the wisit the website here -> [Memory Game](https://www.memory-game.
 
 1. Clone the repo and enter the directory
 ```
-git clone https://github.com/LukaszKosobucki/Autumn-Shop.git
+git clone https://github.com/LukaszKosobucki/MemoryGame.git
 cd Autumn-Shop 
 ```
 2. Install all the dependencies and start the client
