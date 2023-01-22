@@ -1,7 +1,7 @@
 import { Heading3, Heading4 } from "../../global.styled";
 import { useSelectors } from "../../utils/selectors";
 import { GameInfoContainer, TimerBlock, TimerStatic } from "./GameBoard.styled";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, memo } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 
 const GameInfoHeader = () => {
@@ -73,4 +73,4 @@ const GameInfoHeader = () => {
   );
 };
 
-export default GameInfoHeader;
+export default memo(GameInfoHeader);

@@ -1,7 +1,13 @@
 import GameBlock from "./GameBlock";
 import { GameContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { useState, useEffect, memo, useContext, useCallback } from "react";
+import {
+  useState,
+  memo,
+  useContext,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { useSelectors } from "../../utils/selectors";
 import GameInfoHeader from "./GameInfoHeader";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
@@ -20,9 +26,14 @@ const GameBoard = ({ size }: { size: number }) => {
   const [board, setBoard] = useState<TBoard[]>([]);
   const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setBoard(getBoard);
     setEmptyBoard(getEmptyBoard);
+    return () => {
+      setEmptyBoard(getEmptyBoard);
+      setBoard(emptyBoard);
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
 
@@ -45,7 +56,8 @@ const GameBoard = ({ size }: { size: number }) => {
         globalServices.setErrorCounter((prevError) => prevError + 1);
       }
     },
-    [getBoard]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getEmptyBoard, getBoard]
   );
 
   return (
@@ -65,7 +77,6 @@ const GameBoard = ({ size }: { size: number }) => {
         }
       >
         <GameInfoHeader />
-
         {!isPlaying
           ? board.map((block) => (
               <GameBlock
