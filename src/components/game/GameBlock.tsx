@@ -1,4 +1,3 @@
-import { useSelectors } from "../../utils/selectors";
 import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
 import { memo } from "react";
@@ -10,6 +9,7 @@ const GameBlock = ({
   wrongSelected,
   hover,
   canClick,
+  memoHandleClick,
 }: {
   id: number;
   size: number;
@@ -17,10 +17,11 @@ const GameBlock = ({
   wrongSelected?: boolean;
   hover: boolean;
   canClick: boolean;
+  memoHandleClick?: any;
 }) => {
-  const { handleClick } = useSelectors();
   const blockSize = 100 - (size - 3) * 15;
   const marginSize = 4 - (size - 4) * 1;
+
   return (
     <motion.div
       key="Start"
@@ -30,7 +31,7 @@ const GameBlock = ({
       exit={{ opacity: 0 }}
     >
       <GameBlockContainer
-        onClick={() => canClick && !wrongSelected && handleClick(id)}
+        onClick={() => canClick && !wrongSelected && memoHandleClick(id, true)}
         blockSize={blockSize}
         selected={selected}
         hover={hover}

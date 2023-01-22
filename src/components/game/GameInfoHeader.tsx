@@ -17,6 +17,8 @@ const GameInfoHeader = () => {
         let timer = setTimeout(() => setSeconds(seconds - 1), 1000);
         setGameTimer(timer);
         if (seconds <= 0) {
+          globalServices.setErrorCounter(0);
+          globalServices.setCorrectCounter(0);
           globalServices.setIsInputDisabled(false);
           globalServices.gameService.send({
             type: "LOSE_GAME",
@@ -50,6 +52,7 @@ const GameInfoHeader = () => {
   useEffect(() => {
     setSeconds(getTimer);
   }, [getTimer]);
+
   return (
     <GameInfoContainer>
       {!hasLost && <TimerBlock>level: {getLevel}</TimerBlock>}

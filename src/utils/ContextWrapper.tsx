@@ -77,15 +77,12 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     [
       gameService,
       errorCounter,
-      setErrorCounter,
-      setCorrectCounter,
       correctCounter,
       userTime,
       setUserTime,
       userLeaderboard,
       firestore,
       isInputDisabled,
-      setIsInputDisabled,
     ]
   );
 
