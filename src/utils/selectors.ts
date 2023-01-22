@@ -110,8 +110,6 @@ export const useSelectors = () => {
   };
 
   useEffect(() => {
-    console.log("errorCounter selectors:", globalServices.errorCounter);
-
     if (globalServices.errorCounter === 3) {
       globalServices.gameService.send({
         type: "LOSE_GAME",
