@@ -24,7 +24,7 @@ You can see the wisit the website here -> [Memory Game](https://www.memory-game.
 1. Clone the repo and enter the directory
 ```
 git clone https://github.com/LukaszKosobucki/MemoryGame.git
-cd Autumn-Shop 
+cd MemoryGame
 ```
 2. Install all the dependencies and start the client
 ```
