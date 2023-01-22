@@ -1,6 +1,7 @@
 import { useSelectors } from "../../utils/selectors";
 import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
+import { memo } from "react";
 
 const GameBlock = ({
   id,
@@ -40,4 +41,4 @@ const GameBlock = ({
   );
 };
 
-export default GameBlock;
+export default memo(GameBlock);

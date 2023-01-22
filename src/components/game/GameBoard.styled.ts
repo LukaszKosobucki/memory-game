@@ -120,3 +120,8 @@ export const TimerBlock = styled(Heading4)`
   display: flex;
   justify-content: center;
 `;
+export const TimerStatic = styled.span`
+  width: 110px;
+  display: flex;
+  justify-content: center;
+`;

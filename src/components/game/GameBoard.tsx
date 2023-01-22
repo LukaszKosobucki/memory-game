@@ -1,7 +1,7 @@
 import GameBlock from "./GameBlock";
 import { GameContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useSelectors } from "../../utils/selectors";
 import GameInfoHeader from "./GameInfoHeader";
 
@@ -69,4 +69,4 @@ const GameBoard = ({ size }: { size: number }) => {
   );
 };
 
-export default GameBoard;
+export default memo(GameBoard);
