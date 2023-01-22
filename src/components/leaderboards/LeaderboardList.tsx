@@ -9,15 +9,12 @@ const LeaderboardList = () => {
     <LeaderboardListContainer>
       {globalServices.userLeaderboard
         .sort((a, b) => {
-          return a.level > b.level
-            ? -1
-            : 1 || a.errors > b.errors
-            ? 1
-            : -1 || a.time > b.time
-            ? 1
-            : -1 || a.correctClicks > b.correctClicks
-            ? -1
-            : 1;
+          return (
+            b.level - a.level ||
+            a.time - b.time ||
+            a.errors - b.errors ||
+            b.correctClicks - a.correctClicks
+          );
         })
         .slice(0, 6)
         .map((user, index) => (

@@ -1,6 +1,6 @@
 import { Heading3, Heading4 } from "../../global.styled";
 import { useSelectors } from "../../utils/selectors";
-import { GameInfoContainer, TimerBlock } from "./GameBoard.styled";
+import { GameInfoContainer, TimerBlock, TimerStatic } from "./GameBoard.styled";
 import { useEffect, useState, useContext } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 
@@ -16,8 +16,9 @@ const GameInfoHeader = () => {
       if (isPlaying) {
         let timer = setTimeout(() => setSeconds(seconds - 1), 1000);
         setGameTimer(timer);
-        globalServices.setUserTime(60 - seconds);
         if (seconds <= 0) {
+          globalServices.setErrorCounter(0);
+          globalServices.setCorrectCounter(0);
           globalServices.setIsInputDisabled(false);
           globalServices.gameService.send({
             type: "LOSE_GAME",
@@ -29,6 +30,7 @@ const GameInfoHeader = () => {
         }
       }
       if (getWin) {
+        globalServices.setUserTime(60 - seconds);
         clearTimeout(gameTimer);
       }
       if (isPeekBoard) {
@@ -50,6 +52,7 @@ const GameInfoHeader = () => {
   useEffect(() => {
     setSeconds(getTimer);
   }, [getTimer]);
+
   return (
     <GameInfoContainer>
       {!hasLost && <TimerBlock>level: {getLevel}</TimerBlock>}
@@ -63,7 +66,7 @@ const GameInfoHeader = () => {
       )}
       {!hasLost && (
         <TimerBlock>
-          time:<TimerBlock>{seconds}</TimerBlock> s
+          time:<TimerStatic>{seconds}</TimerStatic> s
         </TimerBlock>
       )}
     </GameInfoContainer>

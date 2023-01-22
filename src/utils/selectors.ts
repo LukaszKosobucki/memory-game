@@ -67,6 +67,16 @@ export const useSelectors = () => {
     userCorrectBlocks
   );
 
+  const handleClick = (id: number) => {
+    if (getBoard[id].selected === true) {
+      getEmptyBoard[id].selected = true;
+      globalServices.setCorrectCounter(globalServices.correctCounter + 1);
+    } else {
+      getEmptyBoard[id].wrongSelected = true;
+      globalServices.setErrorCounter(globalServices.errorCounter + 1);
+    }
+  };
+
   const emptyBoardMaker = (level: number) => {
     const emptyBoard = [];
     const size = getSize;
@@ -127,17 +137,6 @@ export const useSelectors = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [globalServices.errorCounter, globalServices.correctCounter]);
-
-  const handleClick = (id: number) => {
-    if (getBoard[id].selected === true) {
-      getEmptyBoard[id].selected = true;
-      globalServices.setCorrectCounter(globalServices.correctCounter + 1);
-    } else {
-      getEmptyBoard[id].wrongSelected = true;
-      console.log(getEmptyBoard[id].wrongSelected);
-      globalServices.setErrorCounter(globalServices.errorCounter + 1);
-    }
-  };
 
   return {
     hasLost: hasLost,
