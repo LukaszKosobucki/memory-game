@@ -41,7 +41,7 @@ export const GlobalStateContext = createContext<GlobalStateContextType>(
 );
 
 export const GlobalStateProvider = ({ children }: IChildren) => {
-  const gameService = useInterpret(gameMachine, { devTools: true });
+  const gameService = useInterpret(gameMachine); // , { devTools: true } <- debbuging for redux devtools
   const [errorCounter, setErrorCounter] = useState<number>(0);
   const [correctCounter, setCorrectCounter] = useState<number>(0);
   const [userTime, setUserTime] = useState<number>(0);
