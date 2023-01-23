@@ -1,56 +1,22 @@
 import GameBlock from "./GameBlock";
 import { GameContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import {
-  useState,
-  memo,
-  useContext,
-  useCallback,
-  useLayoutEffect,
-} from "react";
+import { useState, memo, useContext, useCallback, useEffect } from "react";
 import { useSelectors } from "../../utils/selectors";
 import GameInfoHeader from "./GameInfoHeader";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
+import {
+  boardSizesDesktop,
+  boardSizesMobile,
+  gapSizesDesktop,
+  gapSizesMobile,
+} from "../../utils/gameSizes";
 
 export type TBoard = {
   id: number;
   selected: boolean;
   size: number;
   wrongSelected?: boolean;
-};
-
-export interface Sizes {
-  [key: number]: number;
-}
-
-const gapSizesMobile: Sizes = {
-  3: 10,
-  4: 5,
-  5: 3,
-  6: 3,
-  7: 2,
-};
-const gapSizesDesktop: Sizes = {
-  3: 10,
-  4: 6,
-  5: 5,
-  6: 4,
-  7: 3,
-};
-
-const boardSizesMobile: Sizes = {
-  3: 300,
-  4: 340,
-  5: 340,
-  6: 340,
-  7: 340,
-};
-const boardSizesDesktop: Sizes = {
-  3: 330,
-  4: 360,
-  5: 400,
-  6: 420,
-  7: 410,
 };
 
 const GameBoard = ({ size }: { size: number }) => {
@@ -60,16 +26,12 @@ const GameBoard = ({ size }: { size: number }) => {
   const [board, setBoard] = useState<TBoard[]>([]);
   const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    console.log(isPlaying);
     setBoard(getBoard);
     setEmptyBoard(getEmptyBoard);
-    return () => {
-      setEmptyBoard(getEmptyBoard);
-      setBoard(emptyBoard);
-    };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying]);
+  }, [isPlaying === true]);
 
   const memoHandleClick = useCallback(
     (id: number, value: boolean) => {

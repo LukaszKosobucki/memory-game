@@ -76,6 +76,7 @@ export const gameMachine =
         },
       },
       peekBoard: {
+        entry: ({ emptyBoard }) => console.log("entry", emptyBoard),
         on: {
           PEEK_BOARD: {
             target: "playing",
@@ -87,15 +88,18 @@ export const gameMachine =
         },
       },
       playing: {
+        entry: assign({
+          size: ({ level, size }) => {
+            return size ** 2 / (level + 3) < 2 - 0.2 * (size - 3)
+              ? (size += 1)
+              : size;
+          },
+        }),
         on: {
           WIN_LEVEL: {
             target: "peekBoard",
             actions: assign({
               level: ({ level }) => level + 1,
-              size: ({ level, size }) =>
-                size ** 2 / (level + 3) < 2 - 0.2 * (size - 3)
-                  ? (size += 1)
-                  : size,
               time: ({ time, level }) => (time = 2 + level * 0.1),
               board: (context, event) => (context.board = event.newBoard),
               emptyBoard: (context, event) =>

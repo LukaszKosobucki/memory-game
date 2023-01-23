@@ -1,24 +1,10 @@
 import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
 import { memo } from "react";
-import { Sizes } from "./GameBoard";
+
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 import { useContext } from "react";
-
-const blockSizesMobile: Sizes = {
-  3: 90,
-  4: 80,
-  5: 65,
-  6: 54,
-  7: 47,
-};
-const blockSizesDesktop: Sizes = {
-  3: 100,
-  4: 85,
-  5: 75,
-  6: 65,
-  7: 55,
-};
+import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
 
 const GameBlock = ({
   id,
