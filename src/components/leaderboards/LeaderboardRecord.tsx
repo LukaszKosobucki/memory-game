@@ -33,7 +33,7 @@ const LeaderboardRecord = ({
           <LeaderboardNumber>no.{index + 1}</LeaderboardNumber>
           <LeaderboardName>
             {[1, 2, 3].includes(index + 1) && (
-              <img src={`/medal${index + 1}.png`} alt="" />
+              <img src={`/medal${index + 1}.svg`} alt="" />
             )}
             {user.username}
           </LeaderboardName>
