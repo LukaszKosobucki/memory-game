@@ -6,7 +6,7 @@ The game was made in free time as a project for fun. Since I love those types of
 
 ### During the development I have worked on different features:
 
-* Designing the App from the ground using [Figma](https://www.figma.com/file/liG7SfaWsVWtOZiRGlLH6C/Memory-Game?node-id=2%3A4&t=p0TxR7YA7jFsowWb-1). 
+* Designing the App from the ground using [Figma](https://www.figma.com/file/XmyM4vSlzqH7ZUvfXLzb3k/Memory-Game?node-id=2%3A3&t=mXd9PXAFvU5XtNu1-1). 
 * Making schematics for the game logic before implementation using [draw.io](https://drive.google.com/file/d/1UkLWMNZVk5mMxgXBPL2mOY2-14Rt98AK/view?usp=sharing).
 * Implementation of the App using React with Typescript.
 * Simple firestore database for leaderboard.
