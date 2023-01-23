@@ -31,6 +31,7 @@ export const StartContainer = styled.div`
   height: 600px;
   @media (max-width: 390px) {
     width: 100vw;
+    gap: 4rem;
   }
 `;
 

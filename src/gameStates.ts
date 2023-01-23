@@ -76,7 +76,6 @@ export const gameMachine =
         },
       },
       peekBoard: {
-        entry: ({ emptyBoard }) => console.log("entry", emptyBoard),
         on: {
           PEEK_BOARD: {
             target: "playing",
