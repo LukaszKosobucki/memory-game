@@ -41,13 +41,12 @@ export const GlobalStateContext = createContext<GlobalStateContextType>(
 );
 
 export const GlobalStateProvider = ({ children }: IChildren) => {
-  const gameService = useInterpret(gameMachine);
+  const gameService = useInterpret(gameMachine, { devTools: true });
   const [errorCounter, setErrorCounter] = useState<number>(0);
   const [correctCounter, setCorrectCounter] = useState<number>(0);
   const [userTime, setUserTime] = useState<number>(0);
   const [userLeaderboard, setUserLeaderboard] = useState<IUsers[]>([]);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
-
   const firebaseApp = initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
   const userCol = collection(firestore, `users`);
@@ -58,6 +57,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const [matches, setMatches] = useState<boolean>(
     window.matchMedia("(max-width: 390px)").matches
   );

@@ -5,6 +5,7 @@ import { memo } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 import { useContext } from "react";
 import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
+import { useSelectors } from "../../utils/selectors";
 
 const GameBlock = ({
   id,
@@ -24,6 +25,7 @@ const GameBlock = ({
   memoHandleClick?: any;
 }) => {
   const globalServices = useContext(GlobalStateContext);
+  const { handleClick } = useSelectors();
 
   return (
     <motion.div
@@ -34,7 +36,9 @@ const GameBlock = ({
       exit={{ opacity: 0 }}
     >
       <GameBlockContainer
-        onClick={() => canClick && !wrongSelected && memoHandleClick(id, true)}
+        onClick={() =>
+          canClick && !wrongSelected && !selected && handleClick(id)
+        }
         blockSize={
           globalServices.matches
             ? blockSizesMobile[size]

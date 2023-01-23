@@ -7,7 +7,7 @@ import { useSelectors } from "../../utils/selectors";
 
 const Counting = () => {
   const globalServices = useContext(GlobalStateContext);
-  const { getTimer, getLevel, boardMaker, emptyBoardMaker } = useSelectors();
+  const { getTimer } = useSelectors();
   const [seconds, setSeconds] = useState(getTimer);
 
   useEffect(() => {
@@ -16,8 +16,6 @@ const Counting = () => {
     } else {
       globalServices.gameService.send({
         type: "END_COUNTING",
-        newBoard: boardMaker(getLevel),
-        newEmptyBoard: emptyBoardMaker(getLevel),
       });
     }
   });

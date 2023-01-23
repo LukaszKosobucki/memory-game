@@ -77,19 +77,19 @@ export const useSelectors = () => {
     }
   };
 
-  const emptyBoardMaker = (level: number) => {
-    const emptyBoard = [];
-    const size = getSize;
-    for (let i = 0; i < size ** 2; i++) {
-      emptyBoard.push({
-        id: i,
-        selected: false,
-        size: size,
-        wrongSelected: false,
-      });
-    }
-    return emptyBoard.slice();
-  };
+  // const emptyBoardMaker = (level: number) => {
+  //   const emptyBoard = [];
+  //   const size = getSize;
+  //   for (let i = 0; i < size ** 2; i++) {
+  //     emptyBoard.push({
+  //       id: i,
+  //       selected: false,
+  //       size: size,
+  //       wrongSelected: false,
+  //     });
+  //   }
+  //   return emptyBoard.slice();
+  // };
 
   const boardMaker = (level: number) => {
     let board: TBoard[] = [];
@@ -127,8 +127,6 @@ export const useSelectors = () => {
     ) {
       globalServices.gameService.send({
         type: "WIN_LEVEL",
-        newBoard: boardMaker(getLevel + 1),
-        newEmptyBoard: emptyBoardMaker(getLevel + 1),
         newUserTime: globalServices.userTime,
         newUserErrors: globalServices.errorCounter,
         newUserCorrectBlocks: globalServices.correctCounter,
@@ -151,7 +149,7 @@ export const useSelectors = () => {
     getBoard: getBoard,
     getWin: getWin,
     handleClick: handleClick,
-    emptyBoardMaker: emptyBoardMaker,
+
     getEmptyBoard: getEmptyBoard,
     getUserTime: getUserTime,
     getUserErrors: getUserErrors,
