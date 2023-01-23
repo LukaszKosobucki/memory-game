@@ -14,7 +14,6 @@ const GameBlock = ({
   wrongSelected,
   hover,
   canClick,
-  memoHandleClick,
 }: {
   id: number;
   size: number;
@@ -22,10 +21,9 @@ const GameBlock = ({
   wrongSelected?: boolean;
   hover: boolean;
   canClick: boolean;
-  memoHandleClick?: any;
 }) => {
   const globalServices = useContext(GlobalStateContext);
-  const { handleClick } = useSelectors();
+  const { handleClick, getSize } = useSelectors();
 
   return (
     <motion.div
@@ -47,6 +45,7 @@ const GameBlock = ({
         selected={selected}
         hover={hover}
         wrongSelected={wrongSelected}
+        level6={getSize >= 6 ? true : false}
       ></GameBlockContainer>
     </motion.div>
   );

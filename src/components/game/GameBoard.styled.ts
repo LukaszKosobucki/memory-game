@@ -18,6 +18,7 @@ export const GameBlockContainer = styled.div<{
   selected: boolean;
   hover: boolean;
   wrongSelected: boolean | undefined;
+  level6: boolean;
 }>`
   background-color: ${(props) => {
     if (props.selected) {
@@ -27,7 +28,7 @@ export const GameBlockContainer = styled.div<{
     }
     return colors.WhiteDamnationBasic;
   }};
-  border-radius: 15px;
+  border-radius: ${(props) => (props.level6 ? "5px" : "15px")};
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
   ${(props) =>

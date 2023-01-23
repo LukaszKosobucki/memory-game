@@ -4,7 +4,6 @@ import { GamePrepareContainer } from "./GameBoard.styled";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
-import { useSelectors } from "../../utils/selectors";
 
 const GamePrepare = () => {
   const navigate = useNavigate();
