@@ -14,6 +14,7 @@ export const gameMachine =
       userTime: number;
       userErrors: number;
       userCorrectBlocks: number;
+      hasTransitioned: boolean;
     },
     | { type: "START" }
     | { type: "END_COUNTING" }
@@ -46,6 +47,7 @@ export const gameMachine =
         userErrors: 0,
         userCorrectBlocks: 0,
         size: 3,
+        hasTransitioned: false,
       },
       states: {
         preGame: {
@@ -85,10 +87,17 @@ export const gameMachine =
           },
         },
         playing: {
+          exit: assign({
+            hasTransitioned: false,
+          }),
           on: {
             WIN_LEVEL: {
               target: "peekBoard",
+              cond: (context) => !context.hasTransitioned,
               actions: [
+                assign({
+                  hasTransitioned: ({ hasTransitioned }) => true,
+                }),
                 "level",
                 "size",
                 "board",
