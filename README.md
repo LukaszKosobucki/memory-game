@@ -13,7 +13,7 @@ The game was made in free time as a project for fun. Since I love those types of
 * ~~Testing with Jest.~~
 * xState for state management.
 * Styling with styled-components and framer/motion.
-* ~~Support for mobile devices using media-queries.~~
+* Support for mobile devices using media-queries.
 * I have scanned my project using [SonarCloud](https://sonarcloud.io/project/overview?id=LukaszKosobucki_MemoryGame) for further optimization.
 
 ### Where to see the outcome of this project? 
