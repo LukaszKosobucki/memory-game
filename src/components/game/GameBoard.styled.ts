@@ -70,7 +70,7 @@ export const GameInfoContainer = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  width: 830px;
+  width: 100%;
   text-align: center;
   align-items: center;
   height: 60px;
@@ -141,12 +141,12 @@ export const TimerStatic = styled.span`
   justify-content: center;
 `;
 export const TimerStaticMobile = styled.span`
-  width: 90px;
+  width: 85px;
   display: flex;
   justify-content: center;
 `;
 export const TimerBlockH5 = styled(Heading5)`
-  width: 110px;
+  width: 85px;
   display: flex;
   justify-content: center;
 `;
