@@ -1,10 +1,9 @@
 import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { memo } from "react";
-
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 import { useContext } from "react";
 import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
+import { useSelectors } from "../../utils/selectors";
 
 const GameBlock = ({
   id,
@@ -13,7 +12,6 @@ const GameBlock = ({
   wrongSelected,
   hover,
   canClick,
-  memoHandleClick,
 }: {
   id: number;
   size: number;
@@ -21,10 +19,9 @@ const GameBlock = ({
   wrongSelected?: boolean;
   hover: boolean;
   canClick: boolean;
-  memoHandleClick?: any;
 }) => {
   const globalServices = useContext(GlobalStateContext);
-
+  const { handleClick, getSize } = useSelectors();
   return (
     <motion.div
       key="Start"
@@ -34,7 +31,20 @@ const GameBlock = ({
       exit={{ opacity: 0 }}
     >
       <GameBlockContainer
-        onClick={() => canClick && !wrongSelected && memoHandleClick(id, true)}
+        onClick={() =>
+          canClick &&
+          !wrongSelected &&
+          !selected &&
+          !globalServices.matches &&
+          handleClick(id)
+        }
+        onTouchStart={() =>
+          canClick &&
+          !wrongSelected &&
+          !selected &&
+          globalServices.matches &&
+          handleClick(id)
+        }
         blockSize={
           globalServices.matches
             ? blockSizesMobile[size]
@@ -43,9 +53,10 @@ const GameBlock = ({
         selected={selected}
         hover={hover}
         wrongSelected={wrongSelected}
+        level6={getSize >= 6 ? true : false}
       ></GameBlockContainer>
     </motion.div>
   );
 };
 
-export default memo(GameBlock);
+export default GameBlock;

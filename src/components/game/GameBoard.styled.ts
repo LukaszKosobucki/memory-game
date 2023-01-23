@@ -18,26 +18,28 @@ export const GameBlockContainer = styled.div<{
   selected: boolean;
   hover: boolean;
   wrongSelected: boolean | undefined;
+  level6: boolean;
 }>`
   background-color: ${(props) => {
     if (props.selected) {
       return colors.OrangeJusticeBasic;
     } else if (props.wrongSelected) {
       return colors.GreyUselessBasic;
-    }
-    return colors.WhiteDamnationBasic;
+    } else return colors.WhiteDamnationBasic;
   }};
-  border-radius: 15px;
+  border-radius: ${(props) => (props.level6 ? "5px" : "15px")};
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
   ${(props) =>
     props.wrongSelected &&
     `animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both`};
-  &:hover {
-    ${(props) =>
-      props.hover &&
-      !props.wrongSelected &&
-      `background-color: ${colors.OrangeJusticeBasic}`};
+  @media (min-width: 420px) {
+    &:hover {
+      ${(props) =>
+        props.hover &&
+        !props.wrongSelected &&
+        `background-color: ${colors.OrangeJusticeBasic}`};
+    }
   }
 
   @keyframes shake {
@@ -68,7 +70,7 @@ export const GameInfoContainer = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  width: 830px;
+  width: 100%;
   text-align: center;
   align-items: center;
   height: 60px;
@@ -139,12 +141,12 @@ export const TimerStatic = styled.span`
   justify-content: center;
 `;
 export const TimerStaticMobile = styled.span`
-  width: 90px;
+  width: 85px;
   display: flex;
   justify-content: center;
 `;
 export const TimerBlockH5 = styled(Heading5)`
-  width: 110px;
+  width: 85px;
   display: flex;
   justify-content: center;
 `;

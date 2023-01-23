@@ -13,7 +13,6 @@ export const LeaderboardRecordContainer = styled.div`
   align-items: center;
   @media (max-width: 390px) {
     width: calc(100vw - 5vw);
-    justify-content: space-around;
     padding-left: 0;
     padding-right: 0;
   }

@@ -14,13 +14,12 @@ export const gameMachine =
       userTime: number;
       userErrors: number;
       userCorrectBlocks: number;
+      hasTransitioned: boolean;
     },
     | { type: "START" }
-    | { type: "END_COUNTING"; newBoard: TBoard[]; newEmptyBoard: TBoard[] }
+    | { type: "END_COUNTING" }
     | {
         type: "WIN_LEVEL";
-        newBoard: TBoard[];
-        newEmptyBoard: TBoard[];
         newUserTime: number;
         newUserErrors: number;
         newUserCorrectBlocks: number;
@@ -31,118 +30,156 @@ export const gameMachine =
         newUserErrors: number;
         newUserCorrectBlocks: number;
       }
-    | { type: "SIGNED_IN" }
     | { type: "RETRY" }
-    | { type: "FAILED_TO_SIGN_IN" }
     | { type: "PEEK_BOARD" }
-  >({
-    predictableActionArguments: true,
-    id: "gameMachine",
-    initial: "preGame",
-    context: {
-      level: 1,
-      time: 2,
-      board: [],
-      emptyBoard: [],
-      win: false,
-      userTime: 0,
-      userErrors: 0,
-      userCorrectBlocks: 0,
-      size: 3,
-    },
-    states: {
-      preGame: {
-        on: {
-          START: {
-            target: "countdown",
-            actions: assign({
-              level: ({ level }) => (level = 1),
-              time: ({ time }) => (time = 3),
-            }),
+  >(
+    {
+      predictableActionArguments: true,
+      id: "gameMachine",
+      initial: "preGame",
+      context: {
+        level: 1,
+        time: 2,
+        board: [],
+        emptyBoard: [],
+        win: false,
+        userTime: 0,
+        userErrors: 0,
+        userCorrectBlocks: 0,
+        size: 3,
+        hasTransitioned: false,
+      },
+      states: {
+        preGame: {
+          on: {
+            START: {
+              target: "countdown",
+              actions: [
+                "board",
+                "emptyBoard",
+                assign({
+                  level: ({ level }) => 1,
+                  time: ({ time }) => 3,
+                }),
+              ],
+            },
           },
         },
-      },
-      countdown: {
-        on: {
-          END_COUNTING: {
-            target: "peekBoard",
-            actions: assign({
-              time: ({ time }) => (time = 2),
-              board: (context, event) => (context.board = event.newBoard),
-              emptyBoard: (context, event) =>
-                (context.emptyBoard = event.newEmptyBoard),
-            }),
+        countdown: {
+          on: {
+            END_COUNTING: {
+              target: "peekBoard",
+              actions: assign({
+                time: ({ time }) => 2,
+              }),
+            },
           },
         },
-      },
-      peekBoard: {
-        on: {
-          PEEK_BOARD: {
-            target: "playing",
-            actions: assign({
-              time: ({ time }) => (time = 60),
-              win: ({ win }) => (win = false),
-            }),
+        peekBoard: {
+          on: {
+            PEEK_BOARD: {
+              target: "playing",
+              actions: assign({
+                time: ({ time }) => 60,
+                win: ({ win }) => false,
+              }),
+            },
           },
         },
-      },
-      playing: {
-        entry: assign({
-          size: ({ level, size }) => {
-            return size ** 2 / (level + 3) < 2 - 0.2 * (size - 3)
-              ? (size += 1)
-              : size;
-          },
-        }),
-        on: {
-          WIN_LEVEL: {
-            target: "peekBoard",
-            actions: assign({
-              level: ({ level }) => level + 1,
-              time: ({ time, level }) => (time = 2 + level * 0.1),
-              board: (context, event) => (context.board = event.newBoard),
-              emptyBoard: (context, event) =>
-                (context.emptyBoard = event.newEmptyBoard),
-              userTime: (context, event) =>
-                (context.userTime += event.newUserTime),
-              userErrors: (context, event) =>
-                (context.userErrors += event.newUserErrors),
-              userCorrectBlocks: (context, event) =>
-                (context.userCorrectBlocks = event.newUserCorrectBlocks),
-              win: ({ win }) => (win = true),
-            }),
-          },
-          LOSE_GAME: {
-            target: "endGame",
-            actions: assign({
-              time: ({ time }) => (time = 0),
-              size: ({ size }) => (size = 3),
-              userTime: (context, event) =>
-                (context.userTime += event.newUserTime),
-              userErrors: (context, event) =>
-                (context.userErrors += event.newUserErrors),
-              userCorrectBlocks: (context, event) =>
-                (context.userCorrectBlocks = event.newUserCorrectBlocks),
-            }),
-          },
-        },
-      },
-      endGame: {
-        on: {
-          SIGNED_IN: "signedIn",
-          FAILED_TO_SIGN_IN: "endGame",
-          RETRY: {
-            target: "preGame",
-            actions: assign({
-              level: ({ level }) => (level = 1),
-            }),
+        playing: {
+          exit: assign({
+            hasTransitioned: false,
+          }),
+          on: {
+            WIN_LEVEL: {
+              target: "peekBoard",
+              actions: [
+                assign({
+                  hasTransitioned: ({ hasTransitioned }) => true,
+                }),
+                "level",
+                "size",
+                "board",
+                "emptyBoard",
+                assign({
+                  time: ({ level }) => 2 + level * 0.1,
+                  userTime: (context, event) =>
+                    (context.userTime += event.newUserTime),
+                  userErrors: (context, event) =>
+                    (context.userErrors += event.newUserErrors),
+                  userCorrectBlocks: (context, event) =>
+                    (context.userCorrectBlocks = event.newUserCorrectBlocks),
+                  win: ({ win }) => true,
+                }),
+              ],
+            },
+            LOSE_GAME: {
+              target: "endGame",
+              actions: assign({
+                time: ({ time }) => 0,
+                size: ({ size }) => 3,
+                userTime: (context, event) =>
+                  (context.userTime += event.newUserTime),
+                userErrors: (context, event) =>
+                  (context.userErrors += event.newUserErrors),
+                userCorrectBlocks: (context, event) =>
+                  (context.userCorrectBlocks = event.newUserCorrectBlocks),
+              }),
+            },
           },
         },
-      },
-      signedIn: {
-        on: {
-          RETRY: "preGame",
+        endGame: {
+          on: {
+            RETRY: {
+              target: "preGame",
+              actions: assign({
+                level: ({ level }) => (level = 1),
+              }),
+            },
+          },
         },
       },
     },
-  });
+    {
+      actions: {
+        board: (ctx, e) => {
+          let placeholder: TBoard[] = [];
+          for (let i = 0; i < ctx.size ** 2; i++) {
+            placeholder.push({ id: i, selected: false, size: ctx.size });
+          }
+          const numberOfColoredBlocks = ctx.level + 2;
+          let numberOfAddedColors = 0;
+          while (numberOfAddedColors < numberOfColoredBlocks) {
+            const randomNumber = Math.random();
+            if (randomNumber > 0.5) {
+              placeholder[Math.floor(Math.random() * ctx.size ** 2)][
+                "selected"
+              ] = true;
+            }
+            numberOfAddedColors = placeholder.filter(
+              (obj) => obj.selected === true
+            ).length;
+          }
+          ctx.board = placeholder;
+        },
+        emptyBoard: (ctx, e) => {
+          const placeholder: TBoard[] = [];
+          for (let i = 0; i < ctx.size ** 2; i++) {
+            placeholder.push({
+              id: i,
+              selected: false,
+              size: ctx.size,
+              wrongSelected: false,
+            });
+          }
+          ctx.emptyBoard = placeholder;
+        },
+        size: (ctx, e) => {
+          return ctx.size ** 2 / (ctx.level + 2) < 2 - 0.2 * (ctx.size - 3)
+            ? (ctx.size += 1)
+            : ctx.size;
+        },
+        level: (ctx, e) => (ctx.level += 1),
+      },
+    }
+  );

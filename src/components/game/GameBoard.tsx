@@ -1,7 +1,7 @@
 import GameBlock from "./GameBlock";
 import { GameContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { useState, memo, useContext, useCallback, useEffect } from "react";
+import { useContext } from "react";
 import { useSelectors } from "../../utils/selectors";
 import GameInfoHeader from "./GameInfoHeader";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
@@ -23,37 +23,6 @@ const GameBoard = ({ size }: { size: number }) => {
   const globalServices = useContext(GlobalStateContext);
   const { isPlaying, getLevel, getSize, getBoard, getEmptyBoard } =
     useSelectors();
-  const [board, setBoard] = useState<TBoard[]>([]);
-  const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
-
-  useEffect(() => {
-    setBoard(getBoard);
-    setEmptyBoard(getEmptyBoard);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying === true]);
-
-  const memoHandleClick = useCallback(
-    (id: number, value: boolean) => {
-      if (getBoard[id].selected === true) {
-        setEmptyBoard((prevEmptyBoard: TBoard[]) =>
-          prevEmptyBoard.map((block: TBoard, index: number) => {
-            return index !== id ? block : { ...block, selected: value };
-          })
-        );
-        globalServices.setCorrectCounter((prevCorrect) => prevCorrect + 1);
-        getEmptyBoard[id].selected = true;
-      } else {
-        setEmptyBoard((prevEmptyBoard: TBoard[]) =>
-          prevEmptyBoard.map((block: TBoard, index: number) => {
-            return index !== id ? block : { ...block, wrongSelected: value };
-          })
-        );
-        globalServices.setErrorCounter((prevError) => prevError + 1);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [getEmptyBoard, getBoard]
-  );
 
   return (
     <motion.div
@@ -77,7 +46,7 @@ const GameBoard = ({ size }: { size: number }) => {
       >
         <GameInfoHeader />
         {!isPlaying
-          ? board.map((block) => (
+          ? getBoard.map((block: TBoard) => (
               <GameBlock
                 key={block.id}
                 id={block.id}
@@ -87,7 +56,7 @@ const GameBoard = ({ size }: { size: number }) => {
                 canClick={false}
               />
             ))
-          : emptyBoard.map((block) => (
+          : getEmptyBoard.map((block: TBoard) => (
               <GameBlock
                 key={block.id}
                 id={block.id}
@@ -96,7 +65,6 @@ const GameBoard = ({ size }: { size: number }) => {
                 selected={block.selected}
                 wrongSelected={block.wrongSelected}
                 canClick={true}
-                memoHandleClick={memoHandleClick}
               />
             ))}
       </GameContainer>
@@ -104,4 +72,4 @@ const GameBoard = ({ size }: { size: number }) => {
   );
 };
 
-export default memo(GameBoard);
+export default GameBoard;

@@ -10,7 +10,9 @@ const GamePrepare = () => {
   const globalServices = useContext(GlobalStateContext);
 
   const handleStart = () => {
-    globalServices.gameService.send("START");
+    globalServices.gameService.send({
+      type: "START",
+    });
   };
   const handleLeaderboards = () => {
     navigate("/leaderboards");
