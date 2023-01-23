@@ -13,6 +13,13 @@ export const StartButton = styled.button`
       text-shadow: 0 0 10px ${colors.OrangeJusticeBasic};
     }
   }
+  @media (max-width: 390px) {
+    margin: 0;
+  }
+  &:disabled {
+    color: ${colors.GreyUseless50};
+    animation: none;
+  }
 `;
 
 export const StartContainer = styled.div`
@@ -22,7 +29,9 @@ export const StartContainer = styled.div`
   flex-direction: column;
   width: 640px;
   height: 600px;
-  gap: 1rem;
+  @media (max-width: 390px) {
+    width: 100vw;
+  }
 `;
 
 export const GameDescription = styled.div`
@@ -31,8 +40,14 @@ export const GameDescription = styled.div`
   flex-direction: column;
   width: 480px;
   gap: 1rem;
+  @media (max-width: 390px) {
+    width: 291px;
+  }
 `;
 
 export const TitleContainer = styled(GameDescription)`
   width: 590px;
+  @media (max-width: 390px) {
+    width: 291px;
+  }
 `;

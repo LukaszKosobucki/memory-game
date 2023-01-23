@@ -1,16 +1,16 @@
 import GameBlock from "./GameBlock";
 import { GameContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import {
-  useState,
-  memo,
-  useContext,
-  useCallback,
-  useLayoutEffect,
-} from "react";
+import { useState, memo, useContext, useCallback, useEffect } from "react";
 import { useSelectors } from "../../utils/selectors";
 import GameInfoHeader from "./GameInfoHeader";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
+import {
+  boardSizesDesktop,
+  boardSizesMobile,
+  gapSizesDesktop,
+  gapSizesMobile,
+} from "../../utils/gameSizes";
 
 export type TBoard = {
   id: number;
@@ -26,16 +26,12 @@ const GameBoard = ({ size }: { size: number }) => {
   const [board, setBoard] = useState<TBoard[]>([]);
   const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    console.log(isPlaying);
     setBoard(getBoard);
     setEmptyBoard(getEmptyBoard);
-    return () => {
-      setEmptyBoard(getEmptyBoard);
-      setBoard(emptyBoard);
-    };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying]);
+  }, [isPlaying === true]);
 
   const memoHandleClick = useCallback(
     (id: number, value: boolean) => {
@@ -70,10 +66,14 @@ const GameBoard = ({ size }: { size: number }) => {
     >
       <GameContainer
         boardSize={
-          300 +
-          (getSize <= 6
-            ? getSize * (20 - (getSize === 6 ? 5 : 0))
-            : getSize * 5)
+          globalServices.matches
+            ? boardSizesMobile[getSize]
+            : boardSizesDesktop[getSize]
+        }
+        gap={
+          globalServices.matches
+            ? gapSizesMobile[getSize]
+            : gapSizesDesktop[getSize]
         }
       >
         <GameInfoHeader />

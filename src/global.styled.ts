@@ -7,6 +7,7 @@ export const colors = {
   OrangeJusticeBasic: "#ef8354",
   WhiteDamnationBasic: "#ffffff",
   GreyUseless200: "#b9c7e3",
+  GreyUseless50: "#e6f4ff",
   DarkBackground800: "#474b5d",
 };
 
@@ -48,6 +49,11 @@ export const typography = {
     fontWeight: 700,
     lineHeight: "24px",
   },
+  heading6: {
+    fontSize: "1rem",
+    fontWeight: 700,
+    lineHeight: "19px",
+  },
 };
 
 export const Heading1 = styled.h1`
@@ -75,6 +81,11 @@ export const Heading5 = styled.h5`
   font-weight: ${typography.heading5.fontWeight};
   line-height: ${typography.heading5.lineHeight};
 `;
+export const Heading6 = styled.h6`
+  font-size: ${typography.heading6.fontSize};
+  font-weight: ${typography.heading6.fontWeight};
+  line-height: ${typography.heading6.lineHeight};
+`;
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -88,10 +99,21 @@ export const GlobalStyle = createGlobalStyle`
         overflow-x: clip;
         background-color: ${colors.colorDarkBackgroundBasic};
         font-size: 16px;
+        @media (max-width: 390px) {
+          width: 100vw;
+          height: 100%;
+          position:fixed
+        }
+       
     }
     
     html {
         scroll-behavior: smooth;
+        @media (max-width: 390px) {
+          width: 100vw;
+          height: 100vh;
+          position:fixed
+        }
     }
 
     #root {

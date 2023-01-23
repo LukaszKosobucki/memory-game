@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { colors, Heading4, Heading5 } from "../../global.styled";
+import { colors, Heading4, Heading5, Heading6 } from "../../global.styled";
 import { motion } from "framer-motion";
 
-export const GameContainer = styled.div<{ boardSize: number }>`
+export const GameContainer = styled.div<{ boardSize: number; gap: number }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -10,6 +10,7 @@ export const GameContainer = styled.div<{ boardSize: number }>`
   width: ${(props) => `${props.boardSize}px`};
   justify-content: center;
   flex-wrap: wrap;
+  gap: ${(props) => `${props.gap}px`};
 `;
 
 export const GameBlockContainer = styled.div<{
@@ -17,7 +18,6 @@ export const GameBlockContainer = styled.div<{
   selected: boolean;
   hover: boolean;
   wrongSelected: boolean | undefined;
-  marginSize: number;
 }>`
   background-color: ${(props) => {
     if (props.selected) {
@@ -28,7 +28,6 @@ export const GameBlockContainer = styled.div<{
     return colors.WhiteDamnationBasic;
   }};
   border-radius: 15px;
-  margin: ${(props) => `${props.marginSize}px`};
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
   ${(props) =>
@@ -91,6 +90,10 @@ export const UserInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  @media (max-width: 390px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const UserInput = styled.input`
@@ -100,6 +103,13 @@ export const UserInput = styled.input`
   &:focus {
     outline: none;
     border: none;
+  }
+  @media (max-width: 390px) {
+    height: 25px;
+    width: 50vw;
+  }
+  &:disabled {
+    background-color: ${colors.GreyUseless50};
   }
 `;
 
@@ -115,12 +125,25 @@ export const ErrorMessage = styled(Heading5)`
   margin-top: -1.5rem;
   color: ${colors.OrangeJusticeBasic};
 `;
-export const TimerBlock = styled(Heading4)`
+export const ErrorMessageMobile = styled(Heading6)`
+  color: ${colors.OrangeJusticeBasic};
+`;
+export const TimerBlockH4 = styled(Heading4)`
   width: 110px;
   display: flex;
   justify-content: center;
 `;
 export const TimerStatic = styled.span`
+  width: 110px;
+  display: flex;
+  justify-content: center;
+`;
+export const TimerStaticMobile = styled.span`
+  width: 90px;
+  display: flex;
+  justify-content: center;
+`;
+export const TimerBlockH5 = styled(Heading5)`
   width: 110px;
   display: flex;
   justify-content: center;

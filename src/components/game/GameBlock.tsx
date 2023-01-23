@@ -2,6 +2,10 @@ import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
 import { memo } from "react";
 
+import { GlobalStateContext } from "../../utils/ContextWrapper";
+import { useContext } from "react";
+import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
+
 const GameBlock = ({
   id,
   size,
@@ -19,8 +23,7 @@ const GameBlock = ({
   canClick: boolean;
   memoHandleClick?: any;
 }) => {
-  const blockSize = 100 - (size - 3) * 15;
-  const marginSize = 4 - (size - 4) * 1;
+  const globalServices = useContext(GlobalStateContext);
 
   return (
     <motion.div
@@ -32,11 +35,14 @@ const GameBlock = ({
     >
       <GameBlockContainer
         onClick={() => canClick && !wrongSelected && memoHandleClick(id, true)}
-        blockSize={blockSize}
+        blockSize={
+          globalServices.matches
+            ? blockSizesMobile[size]
+            : blockSizesDesktop[size]
+        }
         selected={selected}
         hover={hover}
         wrongSelected={wrongSelected}
-        marginSize={marginSize}
       ></GameBlockContainer>
     </motion.div>
   );

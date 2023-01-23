@@ -24,6 +24,8 @@ interface GlobalStateContextType {
   firestore: Firestore;
   isInputDisabled: boolean;
   setIsInputDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  matches: boolean;
+  height: () => string;
 }
 
 export interface IUsers {
@@ -56,6 +58,17 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const [matches, setMatches] = useState<boolean>(
+    window.matchMedia("(max-width: 390px)").matches
+  );
+
+  const height = () => (matches ? "650px" : "100vh");
+
+  useEffect(() => {
+    window
+      .matchMedia("(max-width: 390px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
+  });
 
   const values = {
     gameService,
@@ -69,6 +82,8 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     firestore,
     isInputDisabled,
     setIsInputDisabled,
+    matches,
+    height,
   };
 
   const cachedValue = useMemo(
@@ -83,6 +98,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
       userLeaderboard,
       firestore,
       isInputDisabled,
+      matches,
     ]
   );
 

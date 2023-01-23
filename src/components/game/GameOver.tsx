@@ -1,8 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { Heading1, Heading4, Heading5 } from "../../global.styled";
+import {
+  Heading1,
+  Heading2,
+  Heading4,
+  Heading5,
+  Heading6,
+} from "../../global.styled";
 import { StartButton } from "../../pages/Start.styled";
 import {
   ErrorMessage,
+  ErrorMessageMobile,
   GaveOver,
   GaveOverInfo,
   UserInput,
@@ -99,38 +106,77 @@ const GameOver = () => {
       exit={{ opacity: 0 }}
     >
       <GameInfoHeader />
-      <GaveOverInfo>
-        <Heading5>
-          enter your name to preserve the record on the leaderboards
-        </Heading5>
-      </GaveOverInfo>
-      <UserInputContainer>
-        <Heading5>username:</Heading5>
-        <UserInput
-          ref={inputRef}
-          type="text"
-          id="username"
-          name="username"
-          onChange={handleChange}
-          disabled={globalServices.isInputDisabled}
-        />
-        <StartButton
-          type="button"
-          onClick={handleSubmit}
-          disabled={isDisabled.isDisabled}
-        >
-          <Heading5>
-            {globalServices.isInputDisabled ? "submited" : "submit"}
-          </Heading5>
-        </StartButton>
-      </UserInputContainer>
-      <ErrorMessage>{isDisabled.errorMessage}</ErrorMessage>
-      <StartButton type="button" onClick={handleRetry}>
-        <Heading1>Retry</Heading1>
-      </StartButton>
-      <StartButton type="button" onClick={handleLeaderboards}>
-        <Heading4>View Leaderboards</Heading4>
-      </StartButton>
+      {globalServices.matches ? (
+        <>
+          <GaveOverInfo>
+            <Heading6>
+              enter your name to preserve the record on the leaderboards
+            </Heading6>
+          </GaveOverInfo>
+          <UserInputContainer>
+            <UserInput
+              ref={inputRef}
+              type="text"
+              id="username"
+              name="username"
+              onChange={handleChange}
+              disabled={globalServices.isInputDisabled}
+            />
+            <ErrorMessageMobile>{isDisabled.errorMessage}</ErrorMessageMobile>
+            <StartButton
+              type="button"
+              onClick={handleSubmit}
+              disabled={isDisabled.isDisabled}
+            >
+              <Heading4>
+                {globalServices.isInputDisabled ? "submited" : "submit"}
+              </Heading4>
+            </StartButton>
+          </UserInputContainer>
+
+          <StartButton type="button" onClick={handleRetry}>
+            <Heading2>Retry</Heading2>
+          </StartButton>
+          <StartButton type="button" onClick={handleLeaderboards}>
+            <Heading5>View Leaderboards</Heading5>
+          </StartButton>
+        </>
+      ) : (
+        <>
+          <GaveOverInfo>
+            <Heading5>
+              enter your name to preserve the record on the leaderboards
+            </Heading5>
+          </GaveOverInfo>
+          <UserInputContainer>
+            <Heading5>username:</Heading5>
+            <UserInput
+              ref={inputRef}
+              type="text"
+              id="username"
+              name="username"
+              onChange={handleChange}
+              disabled={globalServices.isInputDisabled}
+            />
+            <StartButton
+              type="button"
+              onClick={handleSubmit}
+              disabled={isDisabled.isDisabled}
+            >
+              <Heading5>
+                {globalServices.isInputDisabled ? "submited" : "submit"}
+              </Heading5>
+            </StartButton>
+          </UserInputContainer>
+          <ErrorMessage>{isDisabled.errorMessage}</ErrorMessage>
+          <StartButton type="button" onClick={handleRetry}>
+            <Heading1>Retry</Heading1>
+          </StartButton>
+          <StartButton type="button" onClick={handleLeaderboards}>
+            <Heading4>View Leaderboards</Heading4>
+          </StartButton>
+        </>
+      )}
     </GaveOver>
   );
 };
