@@ -27,7 +27,6 @@ const GameBoard = ({ size }: { size: number }) => {
   const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
 
   useEffect(() => {
-    console.log(isPlaying);
     setBoard(getBoard);
     setEmptyBoard(getEmptyBoard);
     // eslint-disable-next-line react-hooks/exhaustive-deps
