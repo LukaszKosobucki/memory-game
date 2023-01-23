@@ -93,7 +93,6 @@ export const gameMachine =
           on: {
             WIN_LEVEL: {
               target: "peekBoard",
-              cond: (context) => !context.hasTransitioned,
               actions: [
                 assign({
                   hasTransitioned: ({ hasTransitioned }) => true,

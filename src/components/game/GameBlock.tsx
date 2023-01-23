@@ -35,7 +35,18 @@ const GameBlock = ({
     >
       <GameBlockContainer
         onClick={() =>
-          canClick && !wrongSelected && !selected && handleClick(id)
+          canClick &&
+          !wrongSelected &&
+          !selected &&
+          !globalServices.matches &&
+          handleClick(id)
+        }
+        onTouchStart={() =>
+          canClick &&
+          !wrongSelected &&
+          !selected &&
+          globalServices.matches &&
+          handleClick(id)
         }
         blockSize={
           globalServices.matches
