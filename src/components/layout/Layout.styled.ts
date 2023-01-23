@@ -6,4 +6,7 @@ export const MainLayout = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
+  @media (max-width: 390px) {
+    height: 100%;
+  }
 `;

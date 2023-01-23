@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
-
+import { useContext } from "react";
 import Counting from "../components/game/Counting";
 import GameBoard from "../components/game/GameBoard";
 import GameOver from "../components/game/GameOver";
 import GamePrepare from "../components/game/GamePrepare";
+import { GlobalStateContext } from "../utils/ContextWrapper";
 import { useSelectors } from "../utils/selectors";
 
 const Game = () => {
   const { isCounting, isPlaying, isPeekBoard, hasLost } = useSelectors();
+  const globalServices = useContext(GlobalStateContext);
 
   return (
     <motion.div
@@ -17,10 +19,10 @@ const Game = () => {
       animate={{ top: 0 }}
       exit={{ opacity: 0 }}
       style={{
-        height: "100vh",
+        height: globalServices.height(),
         width: "100vw",
         maxHeight: "100vh",
-        maxWidth: "100vw",
+        maxWidth: globalServices.height(),
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

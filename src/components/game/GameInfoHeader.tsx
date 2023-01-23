@@ -1,6 +1,12 @@
-import { Heading3, Heading4 } from "../../global.styled";
+import { Heading3, Heading4, Heading5 } from "../../global.styled";
 import { useSelectors } from "../../utils/selectors";
-import { GameInfoContainer, TimerBlock, TimerStatic } from "./GameBoard.styled";
+import {
+  GameInfoContainer,
+  TimerBlockH4,
+  TimerBlockH5,
+  TimerStatic,
+  TimerStaticMobile,
+} from "./GameBoard.styled";
 import { useEffect, useState, useContext } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 
@@ -54,22 +60,41 @@ const GameInfoHeader = () => {
   }, [getTimer]);
 
   return (
-    <GameInfoContainer>
-      {!hasLost && <TimerBlock>level: {getLevel}</TimerBlock>}
-      {hasLost ? (
-        <Heading3>
-          Your Score: {getLevel}
-          <br /> Congratulations!
-        </Heading3>
+    <>
+      {!globalServices.matches ? (
+        !hasLost ? (
+          <GameInfoContainer>
+            <TimerBlockH4>level: {getLevel}</TimerBlockH4>
+            <Heading4>errors: {globalServices.errorCounter}</Heading4>
+            <TimerBlockH4>
+              time:<TimerStatic>{seconds}</TimerStatic> s
+            </TimerBlockH4>
+          </GameInfoContainer>
+        ) : (
+          <GameInfoContainer>
+            <Heading3>
+              Your Score: {getLevel}
+              <br /> Congratulations!
+            </Heading3>
+          </GameInfoContainer>
+        )
+      ) : !hasLost ? (
+        <GameInfoContainer>
+          <TimerBlockH5>level: {getLevel}</TimerBlockH5>
+          <Heading5>errors: {globalServices.errorCounter}</Heading5>
+          <TimerBlockH5>
+            time:<TimerStaticMobile>{seconds}</TimerStaticMobile> s
+          </TimerBlockH5>
+        </GameInfoContainer>
       ) : (
-        <Heading4>errors: {globalServices.errorCounter}</Heading4>
+        <GameInfoContainer>
+          <Heading3>
+            Your Score: {getLevel}
+            <br /> Congratulations!
+          </Heading3>
+        </GameInfoContainer>
       )}
-      {!hasLost && (
-        <TimerBlock>
-          time:<TimerStatic>{seconds}</TimerStatic> s
-        </TimerBlock>
-      )}
-    </GameInfoContainer>
+    </>
   );
 };
 

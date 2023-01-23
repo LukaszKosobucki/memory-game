@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Heading1,
@@ -6,7 +7,9 @@ import {
   Heading3,
   Heading4,
   Heading5,
+  Heading6,
 } from "../global.styled";
+import { GlobalStateContext } from "../utils/ContextWrapper";
 import {
   GameDescription,
   StartButton,
@@ -16,9 +19,12 @@ import {
 
 const Start = () => {
   const navigate = useNavigate();
+  const globalServices = useContext(GlobalStateContext);
+
   const handleNavigate = () => {
     navigate("/game");
   };
+
   return (
     <motion.div
       key="Start"
@@ -27,9 +33,9 @@ const Start = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       style={{
-        height: "100vh",
+        height: globalServices.height(),
         width: "100vw",
-        maxHeight: "100vh",
+        maxHeight: globalServices.height(),
         maxWidth: "100vw",
         display: "flex",
         justifyContent: "center",
@@ -38,12 +44,24 @@ const Start = () => {
       }}
     >
       <StartContainer>
-        <TitleContainer>
-          <Heading1>Memory Game</Heading1>
-          <Heading4>train your short-memory capacity and retention!</Heading4>
-        </TitleContainer>
+        {globalServices.matches ? (
+          <TitleContainer>
+            <Heading3>Memory Game</Heading3>
+            <Heading6>train your short-memory capacity and retention!</Heading6>
+          </TitleContainer>
+        ) : (
+          <TitleContainer>
+            <Heading1>Memory Game</Heading1>
+            <Heading4>train your short-memory capacity and retention!</Heading4>
+          </TitleContainer>
+        )}
+
         <StartButton type="button" onClick={handleNavigate}>
-          <Heading2>Start</Heading2>
+          {globalServices.matches ? (
+            <Heading3>Start</Heading3>
+          ) : (
+            <Heading2>Start</Heading2>
+          )}
         </StartButton>
 
         <GameDescription>

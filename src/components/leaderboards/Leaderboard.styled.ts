@@ -11,6 +11,12 @@ export const LeaderboardRecordContainer = styled.div`
   height: 50px;
   width: 100%;
   align-items: center;
+  @media (max-width: 390px) {
+    width: calc(100vw - 5vw);
+    justify-content: space-around;
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;
 export const LeaderboardListContainer = styled.div`
   display: flex;
@@ -24,10 +30,14 @@ export const LeaderboardListContainer = styled.div`
 export const LeaderboardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 540px;
-  gap: 1.6rem;
+  gap: 1.5rem;
+  @media (max-width: 390px) {
+    width: 100vw;
+    height: 550px;
+  }
 `;
 
 export const LeaderboardName = styled(Heading4)`
@@ -36,6 +46,11 @@ export const LeaderboardName = styled(Heading4)`
   text-overflow: ellipsis;
   max-width: 300px;
   width: 300px;
+  @media (max-width: 390px) {
+    width: 50vw;
+    flex: 1;
+    margin-left: 1rem;
+  }
 `;
 
 export const LeaderboardLevel = styled(Heading4)`
@@ -43,6 +58,10 @@ export const LeaderboardLevel = styled(Heading4)`
   display: flex;
   justify-content: start;
   flex: 1;
+  @media (max-width: 390px) {
+    width: 100vw;
+    margin-right: 1rem;
+  }
 `;
 
 export const LeaderboardNumber = styled(Heading4)`

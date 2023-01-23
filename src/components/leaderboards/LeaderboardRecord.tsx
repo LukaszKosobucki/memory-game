@@ -1,10 +1,11 @@
-import { IUsers } from "../../utils/ContextWrapper";
+import { GlobalStateContext, IUsers } from "../../utils/ContextWrapper";
 import {
   LeaderboardLevel,
   LeaderboardName,
   LeaderboardNumber,
   LeaderboardRecordContainer,
 } from "./Leaderboard.styled";
+import { useContext } from "react";
 
 const LeaderboardRecord = ({
   user,
@@ -13,17 +14,33 @@ const LeaderboardRecord = ({
   user: IUsers;
   index: number;
 }) => {
+  const globalServices = useContext(GlobalStateContext);
+
   return (
-    <LeaderboardRecordContainer>
-      <LeaderboardNumber>no.{index + 1}</LeaderboardNumber>
-      <LeaderboardName>
-        {[1, 2, 3].includes(index + 1) && (
-          <img src={`/medal${index + 1}.png`} alt="" />
-        )}
-        {user.username}
-      </LeaderboardName>
-      <LeaderboardLevel>level: {user.level}</LeaderboardLevel>
-    </LeaderboardRecordContainer>
+    <>
+      {globalServices.matches ? (
+        <LeaderboardRecordContainer>
+          <LeaderboardName>
+            {[1, 2, 3].includes(index + 1) && (
+              <img src={`/medal${index + 1}.png`} alt="" />
+            )}
+            {user.username}
+          </LeaderboardName>
+          <LeaderboardLevel>level: {user.level}</LeaderboardLevel>
+        </LeaderboardRecordContainer>
+      ) : (
+        <LeaderboardRecordContainer>
+          <LeaderboardNumber>no.{index + 1}</LeaderboardNumber>
+          <LeaderboardName>
+            {[1, 2, 3].includes(index + 1) && (
+              <img src={`/medal${index + 1}.png`} alt="" />
+            )}
+            {user.username}
+          </LeaderboardName>
+          <LeaderboardLevel>level: {user.level}</LeaderboardLevel>
+        </LeaderboardRecordContainer>
+      )}
+    </>
   );
 };
 
