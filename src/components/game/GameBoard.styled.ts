@@ -25,8 +25,7 @@ export const GameBlockContainer = styled.div<{
       return colors.OrangeJusticeBasic;
     } else if (props.wrongSelected) {
       return colors.GreyUselessBasic;
-    }
-    return colors.WhiteDamnationBasic;
+    } else return colors.WhiteDamnationBasic;
   }};
   border-radius: ${(props) => (props.level6 ? "5px" : "15px")};
   height: ${(props) => `${props.blockSize}px`};
@@ -34,11 +33,13 @@ export const GameBlockContainer = styled.div<{
   ${(props) =>
     props.wrongSelected &&
     `animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both`};
-  &:hover {
-    ${(props) =>
-      props.hover &&
-      !props.wrongSelected &&
-      `background-color: ${colors.OrangeJusticeBasic}`};
+  @media (min-width: 420px) {
+    &:hover {
+      ${(props) =>
+        props.hover &&
+        !props.wrongSelected &&
+        `background-color: ${colors.OrangeJusticeBasic}`};
+    }
   }
 
   @keyframes shake {

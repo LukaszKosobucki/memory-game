@@ -23,42 +23,6 @@ const GameBoard = ({ size }: { size: number }) => {
   const globalServices = useContext(GlobalStateContext);
   const { isPlaying, getLevel, getSize, getBoard, getEmptyBoard } =
     useSelectors();
-  // this can be used again in the future
-  // const [board, setBoard] = useState<TBoard[]>([]);
-  // const [emptyBoard, setEmptyBoard] = useState<TBoard[]>([]);
-
-  // useEffect(() => {
-  //   setBoard(getBoard);
-  //   setEmptyBoard(getEmptyBoard);
-  //   return () => {
-  //     setBoard(emptyBoard);
-  //     setEmptyBoard(emptyBoard);
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isPlaying]);
-
-  // const memoHandleClick = useCallback(
-  //   (id: number, value: boolean) => {
-  //     if (getBoard[id].selected === true) {
-  //       setEmptyBoard((prevEmptyBoard: TBoard[]) =>
-  //         prevEmptyBoard.map((block: TBoard, index: number) => {
-  //           return index !== id ? block : { ...block, selected: value };
-  //         })
-  //       );
-  //       globalServices.setCorrectCounter((prevCorrect) => prevCorrect + 1);
-  //       getEmptyBoard[id].selected = true;
-  //     } else {
-  //       setEmptyBoard((prevEmptyBoard: TBoard[]) =>
-  //         prevEmptyBoard.map((block: TBoard, index: number) => {
-  //           return index !== id ? block : { ...block, wrongSelected: value };
-  //         })
-  //       );
-  //       globalServices.setErrorCounter((prevError) => prevError + 1);
-  //     }
-  //   },
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [getBoard]
-  // );
 
   return (
     <motion.div

@@ -77,38 +77,6 @@ export const useSelectors = () => {
     }
   };
 
-  // const emptyBoardMaker = (level: number) => {
-  //   const emptyBoard = [];
-  //   const size = getSize;
-  //   for (let i = 0; i < size ** 2; i++) {
-  //     emptyBoard.push({
-  //       id: i,
-  //       selected: false,
-  //       size: size,
-  //       wrongSelected: false,
-  //     });
-  //   }
-  //   return emptyBoard.slice();
-  // };
-
-  const boardMaker = (level: number) => {
-    let board: TBoard[] = [];
-    const size = getSize;
-    for (let i = 0; i < size ** 2; i++) {
-      board.push({ id: i, selected: false, size: size });
-    }
-    const numberOfColoredBlocks = level + 2;
-    let numberOfAddedColors = 0;
-    while (numberOfAddedColors < numberOfColoredBlocks) {
-      const randomNumber = Math.random();
-      if (randomNumber > 0.5) {
-        board[Math.floor(Math.random() * size ** 2)]["selected"] = true;
-      }
-      numberOfAddedColors = board.filter((obj) => obj.selected === true).length;
-    }
-    return board.slice();
-  };
-
   useEffect(() => {
     if (globalServices.errorCounter === 3) {
       globalServices.gameService.send({
@@ -145,11 +113,9 @@ export const useSelectors = () => {
     isCounting: isCounting,
     getState: getState,
     getSize: getSize,
-    boardMaker: boardMaker,
     getBoard: getBoard,
     getWin: getWin,
     handleClick: handleClick,
-
     getEmptyBoard: getEmptyBoard,
     getUserTime: getUserTime,
     getUserErrors: getUserErrors,

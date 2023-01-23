@@ -1,7 +1,5 @@
 import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { memo } from "react";
-
 import { GlobalStateContext } from "../../utils/ContextWrapper";
 import { useContext } from "react";
 import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
@@ -24,7 +22,6 @@ const GameBlock = ({
 }) => {
   const globalServices = useContext(GlobalStateContext);
   const { handleClick, getSize } = useSelectors();
-
   return (
     <motion.div
       key="Start"
@@ -62,4 +59,4 @@ const GameBlock = ({
   );
 };
 
-export default memo(GameBlock);
+export default GameBlock;
