@@ -32,7 +32,7 @@ export const GameBlockContainer = styled.div<{
   width: ${(props) => `${props.blockSize}px`};
   ${(props) =>
     props.wrongSelected &&
-    `animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both`};
+    `animation: shake 0.82ss cubic-bezier(.36,.07,.19,.97) both`};
   @media (min-width: 600px) {
     &:hover {
       ${(props) =>

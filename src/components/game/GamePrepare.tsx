@@ -4,6 +4,7 @@ import { GamePrepareContainer } from "./GameBoard.styled";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { GlobalStateContext } from "../../utils/ContextWrapper";
+import { motion } from "framer-motion";
 
 const GamePrepare = () => {
   const navigate = useNavigate();
@@ -18,7 +19,13 @@ const GamePrepare = () => {
     navigate("/leaderboards");
   };
   return (
-    <GamePrepareContainer>
+    <GamePrepareContainer
+      as={motion.div}
+      transition={{ duration: 0.5 }}
+      initial={{ x: "-100vw" }}
+      animate={{ x: 0 }}
+      exit={{ x: "-100vw" }}
+    >
       <StartButton onClick={handleStart}>
         <Heading1>Take a peek</Heading1>
       </StartButton>

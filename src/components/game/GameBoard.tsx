@@ -36,7 +36,6 @@ const GameBoard = ({
       transition={{ duration: 0.5 }}
       initial={{ opacity: 0.3 }}
       animate={{ opacity: 1 }}
-      exit={{ y: "-100vh" }}
     >
       <GameContainer
         boardSize={
@@ -45,6 +44,7 @@ const GameBoard = ({
         gap={isMobile ? gapSizesMobile[getSize] : gapSizesDesktop[getSize]}
       >
         <GameInfoHeader hasLost={hasLost} getLevel={getLevel} />
+
         {board.map((block: TBoard) => (
           <GameBlock
             key={block.id}

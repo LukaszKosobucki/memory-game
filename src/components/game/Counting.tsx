@@ -23,9 +23,10 @@ const Counting = () => {
   return (
     <GamePrepareContainer
       as={motion.div}
-      initial={{ opacity: 0.3 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      initial={{ y: "100vh" }}
+      animate={{ y: 0 }}
+      exit={{ y: "100vh" }}
     >
       <Heading1>{seconds}</Heading1>
     </GamePrepareContainer>

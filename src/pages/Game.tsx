@@ -28,15 +28,16 @@ const Game = () => {
       animate="animate"
       exit="exit"
       style={{
+        top: 0,
         height: globalServices.height(),
         width: "100vw",
-        maxHeight: "100vh",
-        maxWidth: globalServices.height(),
+        maxHeight: globalServices.height(),
+        maxWidth: "100vw",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute",
         flexDirection: "column",
+        position: "absolute",
         gap: "4rem",
       }}
     >
