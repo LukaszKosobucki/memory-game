@@ -29,9 +29,9 @@ const Start = () => {
     <motion.div
       key="Start"
       transition={{ duration: 0.5 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={{ x: "100vh" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100vh" }}
       style={{
         height: globalServices.height(),
         width: "100vw",

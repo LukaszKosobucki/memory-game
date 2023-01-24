@@ -33,7 +33,7 @@ export const GameBlockContainer = styled.div<{
   ${(props) =>
     props.wrongSelected &&
     `animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both`};
-  @media (min-width: 420px) {
+  @media (min-width: 600px) {
     &:hover {
       ${(props) =>
         props.hover &&
@@ -92,7 +92,7 @@ export const UserInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-  @media (max-width: 390px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     align-items: center;
   }
@@ -106,7 +106,7 @@ export const UserInput = styled.input`
     outline: none;
     border: none;
   }
-  @media (max-width: 390px) {
+  @media (max-width: 600px) {
     height: 25px;
     width: 50vw;
   }

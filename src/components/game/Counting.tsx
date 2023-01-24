@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useSelectors } from "../../utils/selectors";
 
 const Counting = () => {
-  const globalServices = useContext(GlobalStateContext);
+  const { gameService } = useContext(GlobalStateContext);
   const { getTimer } = useSelectors();
   const [seconds, setSeconds] = useState(getTimer);
 
@@ -14,7 +14,7 @@ const Counting = () => {
     if (seconds > 0) {
       setTimeout(() => setSeconds(seconds - 1), 1000);
     } else {
-      globalServices.gameService.send({
+      gameService.send({
         type: "END_COUNTING",
       });
     }

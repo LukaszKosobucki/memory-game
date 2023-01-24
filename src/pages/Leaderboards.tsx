@@ -6,11 +6,13 @@ import { Heading1, Heading2 } from "../global.styled";
 import { StartButton } from "./Start.styled";
 import { useContext } from "react";
 import { GlobalStateContext } from "../utils/ContextWrapper";
+import { variantsLeaderboard } from "../utils/variants";
+import { useSelectors } from "../utils/selectors";
 
 const Leaderboards = () => {
   const navigate = useNavigate();
   const globalServices = useContext(GlobalStateContext);
-
+  const { getState } = useSelectors();
   const handleStart = () => {
     globalServices.gameService.send("RETRY");
     navigate("/game");
@@ -19,10 +21,10 @@ const Leaderboards = () => {
   return (
     <motion.div
       key="Leaderboards"
-      transition={{ duration: 0.5 }}
-      initial={{ left: "100vh" }}
-      animate={{ left: 0 }}
-      exit={{ opacity: 0 }}
+      variants={variantsLeaderboard[getState.value]}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       style={{
         height: globalServices.height(),
         width: "100vw",
