@@ -24,8 +24,13 @@ import { useSelectors } from "../../utils/selectors";
 
 const GameOver = () => {
   const globalServices = useContext(GlobalStateContext);
-  const { getLevel, getUserErrors, getUserTime, getUserCorrectBlocks } =
-    useSelectors();
+  const {
+    getLevel,
+    getUserErrors,
+    getUserTime,
+    getUserCorrectBlocks,
+    hasLost,
+  } = useSelectors();
   const navigate = useNavigate();
   const inputRef: React.Ref<any> = useRef(null);
   const [isDisabled, setIsDisabled] = useState<{
@@ -105,7 +110,7 @@ const GameOver = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <GameInfoHeader />
+      <GameInfoHeader hasLost={hasLost} getLevel={getLevel} />
       {globalServices.matches ? (
         <>
           <GaveOverInfo>

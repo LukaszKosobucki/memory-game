@@ -35,7 +35,12 @@ const Game = () => {
       {isCounting ? (
         <Counting />
       ) : isPlaying || isPeekBoard ? (
-        <GameBoard size={3} getLevel={getLevel} getSize={getSize} />
+        <GameBoard
+          size={3}
+          getLevel={getLevel}
+          getSize={getSize}
+          hasLost={hasLost}
+        />
       ) : hasLost ? (
         <GameOver />
       ) : (

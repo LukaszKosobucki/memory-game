@@ -22,10 +22,12 @@ const GameBoard = ({
   size,
   getLevel,
   getSize,
+  hasLost,
 }: {
   size: number;
   getLevel: number;
   getSize: number;
+  hasLost: boolean;
 }) => {
   const [isMobile, board, isPlaying, handleClick] = useBoards();
   return (
@@ -42,7 +44,7 @@ const GameBoard = ({
         }
         gap={isMobile ? gapSizesMobile[getSize] : gapSizesDesktop[getSize]}
       >
-        <GameInfoHeader />
+        <GameInfoHeader hasLost={hasLost} getLevel={getLevel} />
         {board.map((block: TBoard) => (
           <GameBlock
             key={block.id}
