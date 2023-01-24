@@ -36,7 +36,7 @@ const GameBoard = ({
       transition={{ duration: 0.5 }}
       initial={{ opacity: 0.3 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      exit={{ y: "-100vh" }}
     >
       <GameContainer
         boardSize={

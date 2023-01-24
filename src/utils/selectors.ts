@@ -105,7 +105,6 @@ export const useSelectors = () => {
     getSize: getSize,
     getBoard: getBoard,
     getWin: getWin,
-
     getEmptyBoard: getEmptyBoard,
     getUserTime: getUserTime,
     getUserErrors: getUserErrors,

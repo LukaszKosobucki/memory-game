@@ -6,19 +6,27 @@ import GameOver from "../components/game/GameOver";
 import GamePrepare from "../components/game/GamePrepare";
 import { GlobalStateContext } from "../utils/ContextWrapper";
 import { useSelectors } from "../utils/selectors";
+import { variantsGame } from "../utils/variants";
 
 const Game = () => {
-  const { isCounting, isPlaying, isPeekBoard, hasLost, getLevel, getSize } =
-    useSelectors();
+  const {
+    isCounting,
+    getState,
+    isPlaying,
+    isPeekBoard,
+    hasLost,
+    getLevel,
+    getSize,
+  } = useSelectors();
   const globalServices = useContext(GlobalStateContext);
 
   return (
     <motion.div
       key="Start"
-      transition={{ duration: 0.5 }}
-      initial={{ top: "100vh" }}
-      animate={{ top: 0 }}
-      exit={{ opacity: 0 }}
+      variants={variantsGame[getState.value]}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       style={{
         height: globalServices.height(),
         width: "100vw",

@@ -63,12 +63,10 @@ const LeaderboardRecord = ({
               animate={{ rotateX: 0 }}
             >
               <LeaderboardNumber>no.{index + 1}</LeaderboardNumber>
-              <LeaderboardName>
-                {[1, 2, 3].includes(index + 1) && (
-                  <img src={`/medal${index + 1}.svg`} alt="" />
-                )}
-                {user.username}
-              </LeaderboardName>
+              {[1, 2, 3].includes(index + 1) && (
+                <img src={`/medal${index + 1}.svg`} alt="" />
+              )}
+              <LeaderboardName>{user.username}</LeaderboardName>
               <LeaderboardLevel>level: {user.level}</LeaderboardLevel>
             </LeaderboardRecordContainer>
           ) : (
