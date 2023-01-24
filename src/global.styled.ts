@@ -99,7 +99,7 @@ export const GlobalStyle = createGlobalStyle`
         overflow-x: clip;
         background-color: ${colors.colorDarkBackgroundBasic};
         font-size: 16px;
-        @media (max-width: 390px) {
+        @media (max-width: 600px) {
           width: 100vw;
           height: 100%;
           position:fixed
@@ -109,7 +109,7 @@ export const GlobalStyle = createGlobalStyle`
     
     html {
         scroll-behavior: smooth;
-        @media (max-width: 390px) {
+        @media (max-width: 600px) {
           width: 100vw;
           height: 100vh;
           position:fixed

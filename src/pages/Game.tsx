@@ -8,7 +8,8 @@ import { GlobalStateContext } from "../utils/ContextWrapper";
 import { useSelectors } from "../utils/selectors";
 
 const Game = () => {
-  const { isCounting, isPlaying, isPeekBoard, hasLost } = useSelectors();
+  const { isCounting, isPlaying, isPeekBoard, hasLost, getLevel, getSize } =
+    useSelectors();
   const globalServices = useContext(GlobalStateContext);
 
   return (
@@ -34,7 +35,7 @@ const Game = () => {
       {isCounting ? (
         <Counting />
       ) : isPlaying || isPeekBoard ? (
-        <GameBoard size={3} />
+        <GameBoard size={3} getLevel={getLevel} getSize={getSize} />
       ) : hasLost ? (
         <GameOver />
       ) : (
