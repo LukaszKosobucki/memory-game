@@ -67,16 +67,6 @@ export const useSelectors = () => {
     userCorrectBlocks
   );
 
-  const handleClick = (id: number) => {
-    if (getBoard[id].selected === true) {
-      getEmptyBoard[id].selected = true;
-      globalServices.setCorrectCounter(globalServices.correctCounter + 1);
-    } else {
-      getEmptyBoard[id].wrongSelected = true;
-      globalServices.setErrorCounter(globalServices.errorCounter + 1);
-    }
-  };
-
   useEffect(() => {
     if (globalServices.errorCounter === 3) {
       globalServices.gameService.send({
@@ -115,7 +105,7 @@ export const useSelectors = () => {
     getSize: getSize,
     getBoard: getBoard,
     getWin: getWin,
-    handleClick: handleClick,
+
     getEmptyBoard: getEmptyBoard,
     getUserTime: getUserTime,
     getUserErrors: getUserErrors,

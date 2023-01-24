@@ -1,30 +1,31 @@
 import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { GlobalStateContext } from "../../utils/ContextWrapper";
-import { useContext } from "react";
 import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
-import { useSelectors } from "../../utils/selectors";
+import { memo } from "react";
 
 const GameBlock = ({
-  id,
-  size,
-  selected,
-  wrongSelected,
+  block,
   hover,
   canClick,
+  getSize,
+  handleClick,
+  isMobile,
 }: {
-  id: number;
-  size: number;
-  selected: boolean;
-  wrongSelected?: boolean;
+  block: {
+    id: number;
+    size: number;
+    selected: boolean;
+    wrongSelected?: boolean;
+  };
   hover: boolean;
   canClick: boolean;
+  getSize: number;
+  handleClick: (id: number) => void;
+  isMobile: boolean;
 }) => {
-  const globalServices = useContext(GlobalStateContext);
-  const { handleClick, getSize } = useSelectors();
   return (
     <motion.div
-      key="Start"
+      key={block.id}
       transition={{ duration: 0.5 }}
       initial={{ opacity: 0.3 }}
       animate={{ opacity: 1 }}
@@ -33,30 +34,30 @@ const GameBlock = ({
       <GameBlockContainer
         onClick={() =>
           canClick &&
-          !wrongSelected &&
-          !selected &&
-          !globalServices.matches &&
-          handleClick(id)
+          !block.wrongSelected &&
+          !block.selected &&
+          !isMobile &&
+          handleClick(block.id)
         }
         onTouchStart={() =>
           canClick &&
-          !wrongSelected &&
-          !selected &&
-          globalServices.matches &&
-          handleClick(id)
+          !block.wrongSelected &&
+          !block.selected &&
+          isMobile &&
+          handleClick(block.id)
         }
         blockSize={
-          globalServices.matches
-            ? blockSizesMobile[size]
-            : blockSizesDesktop[size]
+          isMobile
+            ? blockSizesMobile[block.size]
+            : blockSizesDesktop[block.size]
         }
-        selected={selected}
+        selected={block.selected}
         hover={hover}
-        wrongSelected={wrongSelected}
+        wrongSelected={block.wrongSelected}
         level6={getSize >= 6 ? true : false}
       ></GameBlockContainer>
     </motion.div>
   );
 };
 
-export default GameBlock;
+export default memo(GameBlock);

@@ -8,8 +8,8 @@ import {
   gapSizesDesktop,
   gapSizesMobile,
 } from "../../utils/gameSizes";
-
 import { useBoards } from "./useBoards";
+import { memo } from "react";
 
 export type TBoard = {
   id: number;
@@ -27,8 +27,7 @@ const GameBoard = ({
   getLevel: number;
   getSize: number;
 }) => {
-  const [isMobile, board, isPlaying] = useBoards();
-
+  const [isMobile, board, isPlaying, handleClick] = useBoards();
   return (
     <motion.div
       key={`gameboard${getLevel}`}
@@ -47,12 +46,12 @@ const GameBoard = ({
         {board.map((block: TBoard) => (
           <GameBlock
             key={block.id}
-            id={block.id}
-            size={block.size}
-            selected={block.selected}
-            wrongSelected={block.wrongSelected}
+            block={block}
             canClick={isPlaying}
             hover={isPlaying}
+            getSize={getSize}
+            handleClick={handleClick}
+            isMobile={isMobile}
           />
         ))}
       </GameContainer>
@@ -60,4 +59,4 @@ const GameBoard = ({
   );
 };
 
-export default GameBoard;
+export default memo(GameBoard);

@@ -47,6 +47,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
   const [userTime, setUserTime] = useState<number>(0);
   const [userLeaderboard, setUserLeaderboard] = useState<IUsers[]>([]);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
+
   const firebaseApp = initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
   const userCol = collection(firestore, `users`);
