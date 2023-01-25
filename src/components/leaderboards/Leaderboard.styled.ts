@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { colors, Heading4 } from "../../global.styled";
+import { colors, Heading4, Heading5 } from "../../global.styled";
 import { motion } from "framer-motion";
+import { StartButton } from "../../pages/Start.styled";
 
 export const LeaderboardRecordContainer = styled(motion.div)`
   display: flex;
@@ -42,8 +43,9 @@ export const LeaderboardContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 540px;
+
   gap: 1.5rem;
+  width: 540px;
   @media (max-width: 600px) {
     width: 100vw;
     height: 550px;
@@ -76,8 +78,31 @@ export const LeaderboardLevel = styled(Heading4)`
 export const LeaderboardNumber = styled(Heading4)`
   width: 80px;
   max-width: 80px;
-`;
-export const LeaderboardStats = styled(Heading4)`
   display: flex;
   justify-content: center;
+  @media (max-width: 600px) {
+    width: 36px;
+    max-width: 36px;
+  }
+`;
+export const LeaderboardStats = styled(Heading5)`
+  display: flex;
+  justify-content: start;
+  align-items: start;
+`;
+export const LeaderboardNavigation = styled.div`
+  width: 510px;
+  display: flex;
+  @media (max-width: 600px) {
+    width: calc(100vw - 5vw - 3rem);
+    padding-left: 1rem;
+    padding-right: 2rem;
+  }
+`;
+
+export const NextButton = styled(StartButton)`
+  margin: 0 0 0 auto;
+`;
+export const PreviousButton = styled(StartButton)`
+  margin: 0 auto 0 0;
 `;

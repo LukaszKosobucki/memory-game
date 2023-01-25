@@ -133,7 +133,7 @@ export const gameMachine =
             RETRY: {
               target: "preGame",
               actions: assign({
-                level: ({ level }) => (level = 1),
+                level: ({ level }) => 1,
               }),
             },
           },

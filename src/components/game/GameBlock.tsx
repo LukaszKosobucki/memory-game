@@ -53,7 +53,7 @@ const GameBlock = ({
         }
         selected={block.selected}
         hover={hover}
-        wrongSelected={block.wrongSelected}
+        wrongSelected={block?.wrongSelected}
         level6={getSize >= 6 ? true : false}
       ></GameBlockContainer>
     </motion.div>
