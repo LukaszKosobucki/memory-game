@@ -23,7 +23,6 @@ const GameBlock = ({
   handleClick: (id: number) => void;
   isMobile: boolean;
 }) => {
-  console.log(block.wrongSelected);
   return (
     <motion.div
       key={block.id}
