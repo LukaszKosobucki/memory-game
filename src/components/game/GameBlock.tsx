@@ -23,6 +23,7 @@ const GameBlock = ({
   handleClick: (id: number) => void;
   isMobile: boolean;
 }) => {
+  console.log(block.wrongSelected);
   return (
     <motion.div
       key={block.id}
@@ -53,7 +54,7 @@ const GameBlock = ({
         }
         selected={block.selected}
         hover={hover}
-        wrongSelected={block.wrongSelected}
+        wrongSelected={block?.wrongSelected}
         level6={getSize >= 6 ? true : false}
       ></GameBlockContainer>
     </motion.div>

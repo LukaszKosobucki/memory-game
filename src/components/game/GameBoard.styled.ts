@@ -27,41 +27,40 @@ export const GameBlockContainer = styled.div<{
       return colors.GreyUselessBasic;
     } else return colors.WhiteDamnationBasic;
   }};
-  border-radius: ${(props) => (props.level6 ? "5px" : "15px")};
+  border-radius: ${(props) => (props.level6 ? "8px" : "15px")};
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
+
   ${(props) =>
     props.wrongSelected &&
-    `animation: shake 0.82ss cubic-bezier(.36,.07,.19,.97) both`};
-  @media (min-width: 600px) {
-    &:hover {
-      ${(props) =>
-        props.hover &&
-        !props.wrongSelected &&
-        `background-color: ${colors.OrangeJusticeBasic}`};
-    }
-  }
+    `animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both`};
 
   @keyframes shake {
     10%,
     90% {
       transform: translate3d(-1px, 0, 0);
     }
-
     20%,
     80% {
       transform: translate3d(2px, 0, 0);
     }
-
     30%,
     50%,
     70% {
       transform: translate3d(-4px, 0, 0);
     }
-
     40%,
     60% {
       transform: translate3d(4px, 0, 0);
+    }
+  }
+
+  @media (min-width: 600px) {
+    &:hover {
+      ${(props) =>
+        props.hover &&
+        !props.wrongSelected &&
+        `background-color: ${colors.OrangeJusticeBasic}`};
     }
   }
 `;
