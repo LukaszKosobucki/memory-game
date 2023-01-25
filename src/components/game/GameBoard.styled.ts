@@ -30,7 +30,7 @@ export const GameBlockContainer = styled.div<{
   border-radius: ${(props) => (props.level6 ? "8px" : "15px")};
   height: ${(props) => `${props.blockSize}px`};
   width: ${(props) => `${props.blockSize}px`};
-
+  -webkit-tap-highlight-color: transparent;
   ${(props) =>
     props.wrongSelected &&
     `animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both`};
