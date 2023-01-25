@@ -38,7 +38,7 @@ const GameOver = () => {
     errorMessage: string;
   }>({
     isDisabled: true,
-    errorMessage: "username has to be atlest 4letters long",
+    errorMessage: "username has to be at least 4 letters long",
   });
 
   const handleRetry = () => {
@@ -93,7 +93,7 @@ const GameOver = () => {
     if (username === null || username.length < 4) {
       setIsDisabled({
         isDisabled: true,
-        errorMessage: "username has to be atlest 4letters long",
+        errorMessage: "username has to be at least 4 letters long",
       });
     } else {
       setIsDisabled({
