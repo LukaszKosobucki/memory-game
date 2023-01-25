@@ -84,7 +84,7 @@ export const useSelectors = () => {
             globalServices.setIsInputDisabled(false);
             globalServices.gameService.send({
               type: "LOSE_GAME",
-              newUserTime: globalServices.userTime,
+              newUserTime: 60 - seconds,
               newUserErrors: globalServices.errorCounter,
               newUserCorrectBlocks: globalServices.correctCounter,
             });
@@ -118,7 +118,7 @@ export const useSelectors = () => {
     if (globalServices.errorCounter === 3) {
       globalServices.gameService.send({
         type: "LOSE_GAME",
-        newUserTime: globalServices.userTime,
+        newUserTime: 60 - seconds,
         newUserErrors: globalServices.errorCounter,
         newUserCorrectBlocks: globalServices.correctCounter,
       });
