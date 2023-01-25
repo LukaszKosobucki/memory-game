@@ -1,13 +1,27 @@
-import { useContext } from "react";
-import { GlobalStateContext } from "../../utils/ContextWrapper";
-import { LeaderboardListContainer } from "./Leaderboard.styled";
+import { Heading4 } from "../../global.styled";
+import { IUsers } from "../../utils/ContextWrapper";
+import {
+  LeaderboardListContainer,
+  LeaderboardNavigation,
+  NextButton,
+  PreviousButton,
+} from "./Leaderboard.styled";
 import LeaderboardRecord from "./LeaderboardRecord";
 
-const LeaderboardList = () => {
-  const globalServices = useContext(GlobalStateContext);
+const LeaderboardList = ({
+  userLeaderboard,
+  handleNextPage,
+  handlePreviousPage,
+  leaderboardLimit,
+}: {
+  userLeaderboard: IUsers[];
+  handleNextPage: () => void;
+  handlePreviousPage: () => void;
+  leaderboardLimit: number;
+}) => {
   return (
     <LeaderboardListContainer>
-      {globalServices.userLeaderboard
+      {userLeaderboard
         .sort((a, b) => {
           return (
             b.level - a.level ||
@@ -16,10 +30,26 @@ const LeaderboardList = () => {
             b.correctClicks - a.correctClicks
           );
         })
-        .slice(0, 6)
+        .slice(leaderboardLimit, leaderboardLimit + 6)
         .map((user, index) => (
-          <LeaderboardRecord user={user} index={index} key={user.username} />
+          <LeaderboardRecord
+            user={user}
+            index={leaderboardLimit + index}
+            key={user.username}
+          />
         ))}
+      <LeaderboardNavigation>
+        {leaderboardLimit >= 6 && (
+          <PreviousButton onClick={handlePreviousPage}>
+            <Heading4>previous</Heading4>
+          </PreviousButton>
+        )}
+        {leaderboardLimit + 6 < userLeaderboard.length && (
+          <NextButton onClick={handleNextPage}>
+            <Heading4>next</Heading4>
+          </NextButton>
+        )}
+      </LeaderboardNavigation>
     </LeaderboardListContainer>
   );
 };

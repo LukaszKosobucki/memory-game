@@ -88,7 +88,7 @@ export const GaveOverInfo = styled.div`
   text-align: center;
 `;
 
-export const UserInputContainer = styled.div`
+export const UserInputContainer = styled.form`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;

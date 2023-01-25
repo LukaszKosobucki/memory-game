@@ -44,7 +44,12 @@ const Leaderboards = () => {
           <Heading1>Leaderboards</Heading1>
         )}
 
-        <LeaderboardList />
+        <LeaderboardList
+          userLeaderboard={globalServices.userLeaderboard}
+          handleNextPage={globalServices.handleNextPage}
+          handlePreviousPage={globalServices.handlePreviousPage}
+          leaderboardLimit={globalServices.leaderboardLimit}
+        />
         <StartButton type="button" onClick={handleStart}>
           {globalServices.matches ? (
             <Heading2>Start Game</Heading2>

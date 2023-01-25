@@ -26,6 +26,9 @@ interface GlobalStateContextType {
   setIsInputDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   matches: boolean;
   height: () => string;
+  handleNextPage: () => void;
+  handlePreviousPage: () => void;
+  leaderboardLimit: number;
 }
 
 export interface IUsers {
@@ -47,7 +50,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
   const [userTime, setUserTime] = useState<number>(0);
   const [userLeaderboard, setUserLeaderboard] = useState<IUsers[]>([]);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(false);
-
+  const [leaderboardLimit, setleaderboardLimit] = useState<number>(0);
   const firebaseApp = initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
   const userCol = collection(firestore, `users`);
@@ -71,6 +74,15 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
       .addEventListener("change", (e) => setMatches(e.matches));
   });
 
+  function handleNextPage() {
+    setleaderboardLimit((prev) =>
+      prev + 6 < userLeaderboard.length ? prev + 6 : prev
+    );
+  }
+  function handlePreviousPage() {
+    setleaderboardLimit((prev) => (prev >= 6 ? prev - 6 : prev));
+  }
+
   const values = {
     gameService,
     errorCounter,
@@ -85,6 +97,9 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
     setIsInputDisabled,
     matches,
     height,
+    handleNextPage,
+    handlePreviousPage,
+    leaderboardLimit,
   };
 
   const cachedValue = useMemo(
@@ -100,6 +115,7 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
       firestore,
       isInputDisabled,
       matches,
+      leaderboardLimit,
     ]
   );
 
