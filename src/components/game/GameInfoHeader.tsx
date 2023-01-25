@@ -1,4 +1,5 @@
 import { Heading3, Heading4, Heading5 } from "../../global.styled";
+import { useSelectors } from "../../utils/selectors";
 import {
   GameInfoContainer,
   TimerBlockH4,
@@ -6,7 +7,6 @@ import {
   TimerStatic,
   TimerStaticMobile,
 } from "./GameBoard.styled";
-import { useTimer } from "./useTImer";
 
 const GameInfoHeader = ({
   hasLost,
@@ -15,6 +15,7 @@ const GameInfoHeader = ({
   hasLost: boolean;
   getLevel: number;
 }) => {
+  const { useTimer } = useSelectors();
   const [matches, errorCounter, seconds] = useTimer();
   return (
     <>

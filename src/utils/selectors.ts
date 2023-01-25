@@ -1,5 +1,5 @@
 import { useSelector } from "@xstate/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TBoard } from "../components/game/GameBoard";
 import { GlobalStateContext } from "./ContextWrapper";
 
@@ -66,6 +66,53 @@ export const useSelectors = () => {
     globalServices.gameService,
     userCorrectBlocks
   );
+  const [seconds, setSeconds] = useState<number>(getTimer);
+  function useTimer() {
+    const globalServices = useContext(GlobalStateContext);
+    const { getTimer, isPeekBoard, isPlaying } = useSelectors();
+
+    const [gameTimer, setGameTimer] = useState<ReturnType<typeof setTimeout>>();
+
+    useEffect(() => {
+      if (seconds >= 0) {
+        if (isPlaying) {
+          let timer = setTimeout(() => setSeconds(seconds - 1), 1000);
+          setGameTimer(timer);
+          if (seconds <= 0) {
+            globalServices.setErrorCounter(0);
+            globalServices.setCorrectCounter(0);
+            globalServices.setIsInputDisabled(false);
+            globalServices.gameService.send({
+              type: "LOSE_GAME",
+              newUserTime: globalServices.userTime,
+              newUserErrors: globalServices.errorCounter,
+              newUserCorrectBlocks: globalServices.correctCounter,
+            });
+            clearTimeout(gameTimer);
+          }
+        }
+        if (isPeekBoard) {
+          let peekTimer = setTimeout(
+            () => setSeconds(Math.round((seconds - 0.1) * 10) / 10),
+            100
+          );
+          if (seconds === 0) {
+            globalServices.gameService.send({
+              type: "PEEK_BOARD",
+            });
+            clearTimeout(peekTimer);
+          }
+        }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [seconds]);
+
+    useEffect(() => {
+      setSeconds(getTimer);
+    }, [getTimer]);
+
+    return [globalServices.matches, globalServices.errorCounter, seconds];
+  }
 
   useEffect(() => {
     if (globalServices.errorCounter === 3) {
@@ -85,7 +132,7 @@ export const useSelectors = () => {
     ) {
       globalServices.gameService.send({
         type: "WIN_LEVEL",
-        newUserTime: globalServices.userTime,
+        newUserTime: 60 - seconds,
         newUserErrors: globalServices.errorCounter,
         newUserCorrectBlocks: globalServices.correctCounter,
       });
@@ -109,5 +156,6 @@ export const useSelectors = () => {
     getUserTime: getUserTime,
     getUserErrors: getUserErrors,
     getUserCorrectBlocks: getUserCorrectBlocks,
+    useTimer: useTimer,
   };
 };
