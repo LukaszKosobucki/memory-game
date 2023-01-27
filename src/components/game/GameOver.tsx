@@ -38,7 +38,7 @@ const GameOver = () => {
     errorMessage: string;
   }>({
     isDisabled: true,
-    errorMessage: "username has to be atlest 4letters long",
+    errorMessage: "username has to be at least 4 letters long",
   });
 
   const handleRetry = () => {
@@ -93,7 +93,7 @@ const GameOver = () => {
     if (username === null || username.length < 4) {
       setIsDisabled({
         isDisabled: true,
-        errorMessage: "username has to be atlest 4letters long",
+        errorMessage: "username has to be at least 4 letters long",
       });
     } else {
       setIsDisabled({
@@ -120,7 +120,12 @@ const GameOver = () => {
               enter your name to preserve the record on the leaderboards
             </Heading6>
           </GaveOverInfo>
-          <UserInputContainer>
+          <UserInputContainer
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSubmit();
+            }}
+          >
             <UserInput
               ref={inputRef}
               type="text"
@@ -128,13 +133,12 @@ const GameOver = () => {
               name="username"
               onChange={handleChange}
               disabled={globalServices.isInputDisabled}
+              pattern="^[a-zA-Z0-9]+"
+              maxLength={25}
+              minLength={4}
             />
             <ErrorMessageMobile>{isDisabled.errorMessage}</ErrorMessageMobile>
-            <StartButton
-              type="button"
-              onClick={handleSubmit}
-              disabled={isDisabled.isDisabled}
-            >
+            <StartButton type="submit" disabled={isDisabled.isDisabled}>
               <Heading4>
                 {globalServices.isInputDisabled ? "submited" : "submit"}
               </Heading4>
@@ -155,7 +159,12 @@ const GameOver = () => {
               enter your name to preserve the record on the leaderboards
             </Heading5>
           </GaveOverInfo>
-          <UserInputContainer>
+          <UserInputContainer
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSubmit();
+            }}
+          >
             <Heading5>username:</Heading5>
             <UserInput
               ref={inputRef}
@@ -164,12 +173,11 @@ const GameOver = () => {
               name="username"
               onChange={handleChange}
               disabled={globalServices.isInputDisabled}
+              pattern="^[a-zA-Z0-9]+"
+              maxLength={25}
+              minLength={4}
             />
-            <StartButton
-              type="button"
-              onClick={handleSubmit}
-              disabled={isDisabled.isDisabled}
-            >
+            <StartButton type="submit" disabled={isDisabled.isDisabled}>
               <Heading5>
                 {globalServices.isInputDisabled ? "submited" : "submit"}
               </Heading5>
