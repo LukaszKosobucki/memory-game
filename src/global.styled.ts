@@ -104,6 +104,7 @@ export const GlobalStyle = createGlobalStyle`
           height: 100%;
           position:fixed
         }
+   
        
     }
     
@@ -114,6 +115,8 @@ export const GlobalStyle = createGlobalStyle`
           height: 100vh;
           position:fixed
         }
+        overflow-x: hidden;
+        overflow-y: hidden;
     }
 
     #root {
