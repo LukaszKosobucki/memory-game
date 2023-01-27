@@ -63,14 +63,14 @@ export const GlobalStateProvider = ({ children }: IChildren) => {
   }, []);
 
   const [matches, setMatches] = useState<boolean>(
-    window.matchMedia("(max-width: 390px)").matches
+    window.matchMedia("(max-width: 600px)").matches
   );
 
   const height = () => (matches ? "650px" : "100vh");
 
   useEffect(() => {
     window
-      .matchMedia("(max-width: 390px)")
+      .matchMedia("(max-width: 600px)")
       .addEventListener("change", (e) => setMatches(e.matches));
   });
 
