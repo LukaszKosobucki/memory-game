@@ -1,8 +1,4 @@
-import React, { createContext, useEffect, useState, useMemo } from "react";
 import { useInterpret } from "@xstate/react";
-import { ActorRefFrom } from "xstate";
-import { gameMachine } from "../gameStates";
-import { IChildren } from "../components/layout/Layout";
 import { initializeApp } from "firebase/app";
 import {
   collection,
@@ -10,9 +6,13 @@ import {
   getFirestore,
   onSnapshot,
 } from "firebase/firestore";
+import React, { createContext, useEffect, useMemo, useState } from "react";
+import { ActorRefFrom } from "xstate";
+import { IChildren } from "../components/layout/Layout";
+import { gameMachine } from "../gameStates";
 import firebaseConfig from "./firestore.config";
 
-interface GlobalStateContextType {
+export interface GlobalStateContextType {
   gameService: ActorRefFrom<typeof gameMachine>;
   errorCounter: number;
   setErrorCounter: React.Dispatch<React.SetStateAction<number>>;

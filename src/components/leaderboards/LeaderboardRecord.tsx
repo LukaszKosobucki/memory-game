@@ -1,3 +1,5 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { useContext, useState } from "react";
 import { GlobalStateContext, IUsers } from "../../utils/ContextWrapper";
 import {
   LeaderboardInfoContainer,
@@ -7,8 +9,6 @@ import {
   LeaderboardRecordContainer,
   LeaderboardStats,
 } from "./Leaderboard.styled";
-import { useContext, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 const LeaderboardRecord = ({
   user,
@@ -26,7 +26,10 @@ const LeaderboardRecord = ({
   return (
     <AnimatePresence>
       {globalServices.matches ? (
-        <motion.div onTouchStart={() => setFlipped(!flipped)}>
+        <motion.div
+          onTouchStart={() => setFlipped(!flipped)}
+          data-testid="record-container"
+        >
           {!flipped ? (
             <LeaderboardRecordContainer
               key={"front"}
@@ -65,7 +68,11 @@ const LeaderboardRecord = ({
           )}
         </motion.div>
       ) : (
-        <motion.div onHoverStart={handleHover} onHoverEnd={handleHoverEnd}>
+        <motion.div
+          data-testid="record-container"
+          onHoverStart={handleHover}
+          onHoverEnd={handleHoverEnd}
+        >
           {!flipped ? (
             <LeaderboardRecordContainer
               key={"front"}

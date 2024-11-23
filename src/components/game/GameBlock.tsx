@@ -1,7 +1,7 @@
-import { GameBlockContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
 import { memo } from "react";
+import { blockSizesDesktop, blockSizesMobile } from "../../utils/gameSizes";
+import { GameBlockContainer } from "./GameBoard.styled";
 
 const GameBlock = ({
   block,
@@ -32,6 +32,7 @@ const GameBlock = ({
       exit={{ rotateX: 90 }}
     >
       <GameBlockContainer
+        data-testid={`block-${block.id}`}
         onClick={() =>
           canClick &&
           !block.wrongSelected &&

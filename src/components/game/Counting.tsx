@@ -1,9 +1,9 @@
-import { GlobalStateContext } from "../../utils/ContextWrapper";
-import { useContext, useState, useEffect } from "react";
-import { GamePrepareContainer } from "./GameBoard.styled";
-import { Heading1 } from "../../global.styled";
 import { motion } from "framer-motion";
+import { useContext, useEffect, useState } from "react";
+import { Heading1 } from "../../global.styled";
+import { GlobalStateContext } from "../../utils/ContextWrapper";
 import { useSelectors } from "../../utils/selectors";
+import { GamePrepareContainer } from "./GameBoard.styled";
 
 const Counting = () => {
   const { gameService } = useContext(GlobalStateContext);
@@ -12,13 +12,14 @@ const Counting = () => {
 
   useEffect(() => {
     if (seconds > 0) {
-      setTimeout(() => setSeconds(seconds - 1), 1000);
+      const timerId = setTimeout(() => setSeconds(seconds - 1), 1000);
+      return () => clearTimeout(timerId);
     } else {
       gameService.send({
         type: "END_COUNTING",
       });
     }
-  });
+  }, [seconds]);
 
   return (
     <GamePrepareContainer

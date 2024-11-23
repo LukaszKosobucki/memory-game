@@ -56,7 +56,7 @@ const Start = () => {
           </TitleContainer>
         )}
 
-        <StartButton type="button" onClick={handleNavigate}>
+        <StartButton data-testid="Start" type="button" onClick={handleNavigate}>
           {globalServices.matches ? (
             <Heading3>Start</Heading3>
           ) : (

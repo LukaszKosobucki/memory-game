@@ -1,15 +1,15 @@
-import GameBlock from "./GameBlock";
-import { GameContainer } from "./GameBoard.styled";
 import { motion } from "framer-motion";
-import GameInfoHeader from "./GameInfoHeader";
+import { memo } from "react";
 import {
   boardSizesDesktop,
   boardSizesMobile,
   gapSizesDesktop,
   gapSizesMobile,
 } from "../../utils/gameSizes";
+import GameBlock from "./GameBlock";
+import { GameContainer } from "./GameBoard.styled";
+import GameInfoHeader from "./GameInfoHeader";
 import { useBoards } from "./useBoards";
-import { memo } from "react";
 
 export type TBoard = {
   id: number;

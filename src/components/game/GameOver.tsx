@@ -1,3 +1,6 @@
+import { collection, doc, setDoc } from "firebase/firestore";
+import { motion } from "framer-motion";
+import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Heading1,
@@ -7,6 +10,8 @@ import {
   Heading6,
 } from "../../global.styled";
 import { StartButton } from "../../pages/Start.styled";
+import { GlobalStateContext, IUsers } from "../../utils/ContextWrapper";
+import { useSelectors } from "../../utils/selectors";
 import {
   ErrorMessage,
   ErrorMessageMobile,
@@ -15,12 +20,7 @@ import {
   UserInput,
   UserInputContainer,
 } from "./GameBoard.styled";
-import { useContext, useRef, useState } from "react";
-import { GlobalStateContext, IUsers } from "../../utils/ContextWrapper";
 import GameInfoHeader from "./GameInfoHeader";
-import { motion } from "framer-motion";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { useSelectors } from "../../utils/selectors";
 
 const GameOver = () => {
   const globalServices = useContext(GlobalStateContext);
@@ -129,6 +129,7 @@ const GameOver = () => {
             <UserInput
               ref={inputRef}
               type="text"
+              role="input"
               id="username"
               name="username"
               onChange={handleChange}
@@ -138,7 +139,11 @@ const GameOver = () => {
               minLength={4}
             />
             <ErrorMessageMobile>{isDisabled.errorMessage}</ErrorMessageMobile>
-            <StartButton type="submit" disabled={isDisabled.isDisabled}>
+            <StartButton
+              data-testid="submit"
+              type="submit"
+              disabled={isDisabled.isDisabled}
+            >
               <Heading4>
                 {globalServices.isInputDisabled ? "submited" : "submit"}
               </Heading4>
@@ -169,6 +174,7 @@ const GameOver = () => {
             <UserInput
               ref={inputRef}
               type="text"
+              role="input"
               id="username"
               name="username"
               onChange={handleChange}
@@ -177,7 +183,11 @@ const GameOver = () => {
               maxLength={25}
               minLength={4}
             />
-            <StartButton type="submit" disabled={isDisabled.isDisabled}>
+            <StartButton
+              data-testid="submit"
+              type="submit"
+              disabled={isDisabled.isDisabled}
+            >
               <Heading5>
                 {globalServices.isInputDisabled ? "submited" : "submit"}
               </Heading5>
