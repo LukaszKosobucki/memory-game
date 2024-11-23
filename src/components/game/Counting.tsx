@@ -19,7 +19,7 @@ const Counting = () => {
         type: "END_COUNTING",
       });
     }
-  }, [seconds]);
+  }, [seconds, gameService]);
 
   return (
     <GamePrepareContainer
