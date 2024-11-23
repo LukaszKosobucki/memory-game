@@ -10,7 +10,7 @@ The game was made in free time as a project for fun. Since I love those types of
 * Making schematics for the game logic before implementation using [draw.io](https://drive.google.com/file/d/1UkLWMNZVk5mMxgXBPL2mOY2-14Rt98AK/view?usp=sharing).
 * Implementation of the App using React with Typescript.
 * Simple firestore database for leaderboard.
-* ~~Testing with Jest.~~
+* Testing with Jest and RTL
 * xState for state management.
 * Styling with styled-components and framer/motion.
 * Support for mobile devices using media-queries.
